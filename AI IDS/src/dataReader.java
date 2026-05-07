@@ -25,6 +25,7 @@ public class dataReader {
                            System.out.println("Duration: " + duration);
                    System.out.println("Protocol Type: " + protocolType);
                    System.out.println("Service: " + service);
+                   System.out.println("Label: " + label);
                }
                lineCount++;
 
