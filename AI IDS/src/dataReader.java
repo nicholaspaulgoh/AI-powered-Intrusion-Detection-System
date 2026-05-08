@@ -14,7 +14,7 @@ public class dataReader {
             while((line= br.readLine()) != null){
                String[] values=line.split(",");
 
-               String label = values[41];
+               String label = values[41]; //In your intrusion detection dataset, the attack label is the answer/output the AI is supposed to learn.
 
                String duration = values[0];
                String protocolType = values[1];
