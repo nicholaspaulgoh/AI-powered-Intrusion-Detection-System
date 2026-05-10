@@ -17,7 +17,7 @@ public class combinedExamples{
             while((line=br.readLine()) != null){
                 String[] values = line.split(",");
 
-                dataset.add(values); //dataset(0): [value[0], value[1], value[2]....]
+                dataset.add(values); //dataset(0): [values[0], values[1], values[2]....]
 
                 String label = values[41];
 
