@@ -1,18 +1,22 @@
-//Note: Machine learning models cannot understand: "tcp","udp"....They only understand numbers.
-//so basically: Convert messy network CSV data into clean numeric vectors for AI
-
+import java.util.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
+public class Preprocessor{
 
-public class Preprocessor {
+    static HashMap<String, Double>protocolMap = new HashMap<>();
+    static HashMap<String, Double>serviceMap = new HashMap<>();
+    static HashMap<String, Double>flagMap = new HashMap<>();
 
-    static HashMap<String, Double> protocolMap = new HashMap<>();
-    static HashMap<String, Double> serviceMap = new HashMap<>();
-    static HashMap<String, Double> flagMap = new HashMap<>();
+    static HashMap<String,String>attackMap = new HashMap<>();
 
-    static {
+    static double[] trainMax;
+    static double[] trainMin;
+
+    static ArrayList<String> trainLabels = new ArrayList<>();
+    static ArrayList<String> testLabels = new ArrayList<>();
+
+    static{
+
         protocolMap.put("tcp", 0.0);
         protocolMap.put("udp", 1.0);
         protocolMap.put("icmp", 2.0);
@@ -74,9 +78,9 @@ public class Preprocessor {
         serviceMap.put("ctf", 54.0);
         serviceMap.put("supdup", 55.0);
         serviceMap.put("mtp", 56.0);
-        serviceMap.put("IRC", 57.0);
-        serviceMap.put("X11", 58.0);
-        serviceMap.put("Z39_50", 59.0);
+        serviceMap.put("irc", 57.0);
+        serviceMap.put("x11", 58.0);
+        serviceMap.put("z39_50", 59.0);
         serviceMap.put("eco_i", 60.0);
         serviceMap.put("ecr_i", 61.0);
         serviceMap.put("urh_i", 62.0);
@@ -100,152 +104,247 @@ public class Preprocessor {
         flagMap.put("S3", 8.0);
         flagMap.put("OTH", 9.0);
         flagMap.put("RSTOS0", 10.0);
+
+        attackMap.put("normal", "normal");
+
+        for(String attack : new String []{"neptune","smurf","pod","teardrop","land","back","apache2","udpstorm","processtable","mailbomb"})
+            attackMap.put( attack, "DoS");
+
+        for(String attack : new String []{"ipsweep","portsweep","nmap","satan","mscan","saint"})
+            attackMap.put( attack, "Probe");
+
+        for(String attack : new String []{ "guess_passwd","ftp_write","imap","phf","multihop","warezmaster","warezclient","spy","xlock","xsnoop","snmpgetattack","named","sendmail","httptunnel","worm","snmpguess"})
+            attackMap.put( attack, "R2L");
+
+        for(String attack : new String []{"buffer_overflow","rootkit","loadmodule","perl", "xterm","ps","sqlattack"})
+            attackMap.put(attack, "U2R");
     }
 
-    public static double safeParseDouble(String value) {
-        try {
-            return Double.parseDouble(value.trim());
-        } catch (NumberFormatException e) { //Example Double.parseDouble("abc")
-            return 0.0;
-        }
-    }// end safeParseDouble
+    public static String mapCategory(String attack){
+        return attackMap.getOrDefault(attack, "unknown");
 
-
-    //["0","tcp","ftp_data","SF","491",...] (one raw CSV row) >>> [0.0,0.0,5.0,0.0,491.0,...] (numeric feature vector)
-    public static double[] processRow(String[] values) {
-
-        double[] features = new double[41]; //so only train AI with input 0-40 (42 is the label >>answer);
-
-        features[0] = safeParseDouble(values[0]); //using safeParseDouble which has trim >> trim not needed
-
-        features[1]= protocolMap.getOrDefault(values[1].trim(),-1.0);
-        // if there's a protocol that is not listed in the map it will return -1.0 example "weird_protocol"
-        //.get will return null
-
-        features[2] = serviceMap.getOrDefault(values[2].trim(), 6.0); //6.0 =other
-
-        features[3] = flagMap.getOrDefault(values[3].trim(), -1.0);
-
-        for(int i=4; i<features.length;i++){
-            features[i]= safeParseDouble(values[i]);
-        }
-        return features;
     }
 
-    public static ArrayList<double[]> loadDataset (String filepath){
 
-        ArrayList<double[]> processed = new ArrayList<>();
+
+    public static double safeParseDouble(String value){
 
         try{
-            BufferedReader br = new BufferedReader (new FileReader(filepath));
-            String line;
-            int rowNum=0;
+            return Double.parseDouble(value.trim());
+        }catch(Exception ex1){
+            return Double.NaN;
+        }
+
+    }
+
+    public static double[] getFeatures(String[] dataset){
+
+        int datasetFeatures =41;
+        double[] features = new double[datasetFeatures];
+
+        features[0] = safeParseDouble(dataset[0]);
+
+        features[1] = protocolMap.getOrDefault(dataset[1].trim(),-1.0); //decided not to put Double.NaN to prevent data loss
+        features[2] = serviceMap.getOrDefault(dataset[2].trim().toLowerCase(), 6.0); //6.0==other
+        features[3] = flagMap.getOrDefault(dataset[3].trim(), -1.0);
+
+        for(int i =4; i<41; i++){ //we only want 41 rows, KDDTrain+.txt has 43 rows in total
+
+            features[i] = safeParseDouble(dataset[i]);
+        }//end for
 
 
-            while((line =br.readLine()) != null){
-                String[] values = line.split(",");
+        return features;
 
-                for(int i=0; i<values.length;i++){ //removes hidden spaces from EVERY column.
-                    values[i]= values[i].trim();
 
-                    /*String name = " John ";
-                    name.trim();
-                    System.out.println(name);
-                    output: " John "
-                    hence why reassigning is important so after trimming String it becomes "John"
-                     */
+
+    }//end getFeatures
+
+    public static void computeMaxMin(ArrayList <double[]> processed){
+
+        int featuresNum=41;
+        trainMax= new double[featuresNum];
+        trainMin = new double[featuresNum];
+
+        for(int i=0; i<featuresNum; i++){
+            trainMax[i] = Double.NEGATIVE_INFINITY;
+            trainMin[i] = Double.POSITIVE_INFINITY;
+        }
+
+        for(double[]row :processed){	//Go through each row: 1st iteration= 1st row[0.0,1.0,..] 2nd i = 2nd row[0.0,2.0...]
+            for(int i =0; i<featuresNum; i++){		// Then check each feature whether it is larger or smaller, if it is then store
+                if(row[i]>trainMax[i]) trainMax[i]=row[i];	//Then go to second row and start the whole process again
+                if(row[i]<trainMin[i]) trainMin[i]=row[i];	//This is to get the max and min of each feature
+            }
+        }
+        System.out.println("\n[2] Min/Max computed from: " + processed.size() + " rows");
+        System.out.println("src_bytes ranges from: " + trainMin[4]+ " to " + trainMax[4]);
+        System.out.println("duration ranges from: " + trainMin[0]+ " to " + trainMax[0]);
+        System.out.println("count ranges from: " + trainMin[22]+ " to " + trainMax[22]);
+
+    }
+
+    public static void normalize(ArrayList <double[]> processed){
+
+        for(double[] row :processed){
+            for(int i=0; i<41; i++){
+                double range=trainMax[i]-trainMin[i];
+
+                if(range==0){		//all values identical, example feature 1 =[0,0,0,0,0] so max =0, min=0 range =0
+                    row[i]=0.0;	//row[i] -min[i]/ 0 is wrong, so directly give it the value of 0.0
+                }else{
+                    row[i]=Math.min((row[i]-trainMin[i])/range,1.0);
+
+                    if (row[i]<0){
+                        row[i]=0.0;
+
+                    }
+
+                }//end else
+            }//end inner loop
+        }
+
+        System.out.println("Total rows normalize: " + processed.size());
+    }// end normalize
+
+
+
+    public static ArrayList<double[]> processRow(String filepath, ArrayList<String>labels){
+
+        String line;
+        String[] dataset;
+        ArrayList<double[]> processed = new ArrayList<>();
+        int malformedRow=0;
+        int corruptedRow=0;
+
+        try(BufferedReader br = new BufferedReader(new FileReader(filepath))){
+
+            while((line=br.readLine()) != null){
+
+                dataset = line.split(",");
+
+
+                if(dataset.length <42){ //41 features + label
+                    malformedRow++;
+                    System.out.println("malformed row detected: row " + line);
+                    continue;
+                }//end if
+
+
+                double[]features =getFeatures(dataset);
+
+                boolean skipRow=false;
+
+                for(double f : features){
+                    if(Double.isNaN(f)){
+                        corruptedRow++;
+                        skipRow=true;
+                        break;
+                    }
                 }
 
-                if (values.length <42){ //Corrupted Row like 0,tcp,http can crash the program
-                    System.out.println("Skipping malformed row" + rowNum);
+                if(skipRow){
+                    System.out.println("corrupted row detected: row  " + line);
                     continue;
                 }
 
+                labels.add(dataset[41].trim());
 
-                double[] features = processRow(values); //input ["0","tcp","http",...] >> output: [0.0,0.0,0.0,...]
                 processed.add(features);
+            }//end while
 
-                /*processed
-                 |─ row1 features: [0.0,...]
-                 ├── row2 features: [0.0,...]
-                 ├── row3 features: [0.0,...]
-                */
-
-                rowNum++;
-            }
-                System.out.println("Processed " +processed.size() + " rows successfully");
-
-
-            br.close();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("Total processed rows: " + processed.size());
+            System.out.println("Total malformed rows: " + malformedRow);
+            System.out.println("Total corrupted rows: " + corruptedRow);
+        }catch(Exception ex1){
+            System.out.println("Error: " + ex1.getMessage());
         }
         return processed;
-    }
+    }//end processRow
 
-    // normalise all numeric features
-    public static void normalise (ArrayList<double[]> dataset) {
 
-        int numFeatures = 41;
+    public static void main(String [] args){
 
-        // Step 1 — find min and max for each feature
-        double[] min = new double[numFeatures];
-        double[] max = new double[numFeatures];
+        String trainPath="C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTrain+.txt";
+        String testPath="C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTest+.txt";
 
-        // Initialise min to very large, max to very small
-        for (int i = 0; i < numFeatures; i++) {
-            min[i] = Double.MAX_VALUE;
-            max[i] = -Double.MAX_VALUE;
-        }
 
-        // First pass — scan entire dataset for min/max
-        for (double[] row : dataset) {
-            for (int i = 0; i < numFeatures; i++) {
-                if (row[i] < min[i]) min[i] = row[i];
-                if (row[i] > max[i]) max[i] = row[i];
-            }
-        }
 
-        // Step 2 — normalise every value
-        for (double[] row : dataset) {
-            for (int i = 0; i < numFeatures; i++) {
-                double range = max[i] - min[i];
-                if (range == 0) {
-                    row[i] = 0.0; // if all values are the same, set to 0
-                } else {
-                    double normalised = (row[i] - min[i]) / range;
-                    row[i] = Math.min(normalised, 1.0);
-                }
-            }
-        }
+        System.out.println("========================================");
+        System.out.println("  NSL-KDD PREPROCESSING PIPELINE");
+        System.out.println("========================================");
+        System.out.println("\n[1] Training Set: ");
+        System.out.println();
+        ArrayList<double[]> processed_Train = processRow(trainPath,trainLabels);
 
-        System.out.println("Normalisation complete.");
-        System.out.println("Sample — feature 4 (src_bytes) range after normalisation:");
-        System.out.printf("  First row value: %.10f%n", dataset.get(0)[4]);
-    }
+        System.out.println();
+        computeMaxMin(processed_Train);
 
-    public static void main(String[] args) {
-        String filepath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTrain+.txt";
-        ArrayList<double[]> dataset = loadDataset(filepath);
-        normalise(dataset);
+        System.out.println("\n[3] Normalization - Training Set: ");
+        normalize(processed_Train);
 
-        int i = 0;
-        while (i != 6) {
-            System.out.print("Row " + i + ": [ ");
-            for (int j = 0; j < dataset.get(i).length; j++) {
-                System.out.print(dataset.get(i)[j]);
+        System.out.println("\n[4] Loading and Normalising - Test Set: ");
+        ArrayList<double[]> processed_Test = processRow(testPath,testLabels);
+        normalize(processed_Test);
 
-                if (j != dataset.get(i).length - 1) {
-                    System.out.print(", ");
-                } else {
-                    System.out.print(" ]");
-                }
-
-            }
+        System.out.println("\n[5] Verification first 3 training rows: ");
+        for(int i=0; i<3;i++){
+            System.out.println("Row " + i+"  label: " + trainLabels.get(i) +"  Category: " + mapCategory(trainLabels.get(i)));
+            System.out.println("features[0-5]: ");
+            for(int j=0; j<6;j++){
+                System.out.print(processed_Train.get(i)[j] +" ");
+            }//end inner loop
             System.out.println();
-            i++;
-        }
+        }//end outer loop
 
 
-    }
-}
+
+        System.out.println("\n[6]  Range check — all values should be 0.0 to 1.0: ");
+        int outOfRange=0;
+
+
+        for( double[] row : processed_Train){
+            for(double feature :row){
+                if( feature<0.0 || feature>1.0) outOfRange++;
+            }//end inner loop
+        }//end outer loop
+
+        System.out.println("Training set out-of-range values: " + outOfRange);
+        outOfRange=0;
+        for(double[] row : processed_Test){
+            for(double feature :row){
+                if( feature<0.0 || feature>1.0) outOfRange++;
+            }//end inner loop
+        }//end outer loop
+
+        System.out.println("Test set out-of-range values: " + outOfRange);
+
+
+        System.out.println("\n[7] Training set class distribution:");
+        HashMap<String, Integer> catCount = new HashMap<>();
+
+        for(String attack : trainLabels){
+            String category = mapCategory(attack);
+            catCount.put(category, catCount.getOrDefault(category,0)+1);
+        }//end loop
+
+
+        catCount.forEach((key,value) ->{
+            double percentage= ((double)value/processed_Train.size())*100;
+            System.out.println();
+            System.out.printf("%s:\t%d (%.2f%%)%n",key,value,percentage);
+
+        });
+
+        System.out.println("\n========================================");
+        System.out.println("  PREPROCESSING COMPLETE");
+        System.out.println("  Training rows: " + processed_Train.size());
+        System.out.println("  Test rows:     " + processed_Test.size());
+        System.out.println("  Ready for Weka classifier");
+        System.out.println("========================================");
+    }//end main
+
+}//end class
+
+		
+		
