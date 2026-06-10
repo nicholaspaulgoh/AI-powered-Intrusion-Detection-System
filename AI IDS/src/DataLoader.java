@@ -53,7 +53,7 @@ public class DataLoader{
 
             String category=Preprocessor.mapCategory(label); ////Convert Attack Name → Category
 
-            double[] instanceValues = new double[42]; //42 rows
+            double[] instanceValues = new double[42]; //42 values
             System.arraycopy(featureRow,0,instanceValues,0,41);	 //last row (42) for attack label
 
 									/*
