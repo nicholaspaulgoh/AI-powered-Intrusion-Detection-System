@@ -9,19 +9,25 @@
     <artifactId>AI-IDS</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <!-- JavaFX Controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>24</version>
+            <version>17.0.12</version>
         </dependency>
 
         <!-- JavaFX FXML (if you use FXML) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>24</version>
+            <version>17.0.12</version>
         </dependency>
 
         <!-- Pcap4J -->

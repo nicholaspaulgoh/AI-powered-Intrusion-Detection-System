@@ -61,7 +61,7 @@ public class ClassifierEngine{
 
         long fileSize = file.length();
         System.out.println("Model saved to: "+filepath);
-        System.out.printf("%nFile Size:  %.1f KB%n", (fileSize/1024));
+        System.out.printf("%nFile Size:  %.1f KB%n", (fileSize/1024.0));
     }//end saveModel
 
     public static AbstractClassifier loadModel(String filepath) throws Exception{

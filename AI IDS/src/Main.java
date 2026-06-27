@@ -11,6 +11,7 @@ public class Main{
 
         String trainPath="C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTrain+.txt";
         String modelPath="C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\models\\random_forest.model";
+        String testPath="C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTest+.txt";
 
         System.out.println("====================================================");
         System.out.println("          AI-Powered IDS — Training Pipeline        ");
@@ -56,7 +57,12 @@ public class Main{
         System.out.println("Smoke test prediction on row 0: " + prediction);
         System.out.println("Attack Category: " + Preprocessor.mapCategory(trainLabel.get(0)));
 
-        System.out.println("\n======================= Training Pipeline Complete =============================");
+        System.out.println("\n====================Training Pipeline Complete=========================================");
+
+        System.out.println("\n[5] Testing test set evaluation...");
+        TrafficInput.startCSVSimulation(testPath,loadedModel_rf,instances);
+
+
 
     }//end main method
 }//end Main class
