@@ -62,14 +62,14 @@ public class TrafficInput {
                 String currentOutcome = isCorrect(currentAttackLabel, currentPrediction);
 
 
-                System.out.printf("Row %d     actual attack label: %s -> prediction: %s %s %n"
-                        , i, currentAttackLabel, currentPrediction, currentOutcome);
+                /* System.out.printf("Row %d     actual attack label: %s -> prediction: %s %s %n"
+                        , i, currentAttackLabel, currentPrediction, currentOutcome); */
 
                 if(currentOutcome.equals("✓ Correct")){
                     correctCount++;
                     mapCategoryStats.merge(currentAttackLabel, 1, Integer::sum);
                 }
-                Thread.sleep(5);
+                Thread.sleep(1);
 
             }//end for - Output per row
 
@@ -81,7 +81,7 @@ public class TrafficInput {
             System.out.println("Total rows loaded: " + features.size());
             System.out.println("Total rows skipped: " + malformed);
 
-            double accuracy = (double)(correctCount *100.0/features.size());
+            double accuracy = (correctCount *100.0/features.size());
             System.out.printf("%nOverall Accuracy: %d / %d (%.2f%%)%n", correctCount, features.size(), accuracy);
 
 
