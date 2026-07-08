@@ -12,7 +12,12 @@ public class TrafficInput {
     static int correctCount=0;
     static Map<String, Integer> mapCategoryStats = new HashMap<>();
 
-    public static void startCSVSimulation(String filePath, AbstractClassifier model, Instances dataStructure ) throws Exception {
+    public static void startCSVSimulation(
+            String filePath,
+            AbstractClassifier binaryClassifier,
+            AbstractClassifier multiClassifier,
+            Instances binaryStructure,
+            Instances multiClassStructure) throws Exception {
 
         //Reset to avoid accumulation
         correctCount=0;
@@ -40,7 +45,7 @@ public class TrafficInput {
 
                 attackLabels.add(Preprocessor.mapCategory(values[41].trim()));
 
-                features.add(Preprocessor.getFeatures(values));
+                features.add(Preprocessor.engineerFeatures(Preprocessor.getFeatures(values)));
 
 
             }//end while
@@ -52,7 +57,11 @@ public class TrafficInput {
             //Predicting
             System.out.println("Predicting");
             for (double[] row : features) {
-                predictions.add(ClassifierEngine.classify(model, row, dataStructure));
+                String prediction = ClassifierEngine.classifyTwoStage(
+                        binaryClassifier, multiClassifier, row,
+                        binaryStructure, multiClassStructure
+                );
+                predictions.add(prediction);
             }//end for - Predicting
 
             //Output per row

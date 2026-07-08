@@ -160,9 +160,57 @@ public class Preprocessor{
 
     }//end getFeatures
 
+    public static double[] engineerFeatures(double [] features){
+        double[] extended = new double[46];
+        System.arraycopy(features,0,extended,0,41); //copy original 41
+
+        // Feature 41: byte ratio — high for R2L & DoS (attacker sends, rarely receives)
+        //the higher the srcBytes & the lower the dstBytes, the larger the ratio -> more likely to be an attack
+        double srcBytes =features[4];
+        double dstBytes = features[5];
+
+        extended[41] = srcBytes/(dstBytes+1.0); //+1.0 in case dstBytes =0, prevent the system from crashing
+
+        // Feature 42: failed login with no success — brute force R2L indicator
+        double failedLogins =features[10];
+        double loggedIn = features[11];
+
+        extended[42] = failedLogins * (1.0- loggedIn);
+        //failedLogins =6 , loggedIn =1, [42]= 0 which means eventually logged in
+        //failedLogins =6, loggedIn=0, [42]=6 never logged in, may indicate brute-force attack
+
+        // Feature 43: privilege escalation score — U2R composite
+        double suAttempted =features[14];
+        double rootShell = features[13];
+        double numShells =features[17];
+
+        extended[43] = suAttempted + rootShell + numShells; //Higher the value, higher chance of U2R or privillege escalation
+
+        // Feature 44: file access intensity — U2R file activity
+        double numAccessFiles = features[18];
+        double numFileCreations = features[16];
+
+        extended[44] = numAccessFiles + numFileCreations;
+        /*
+        Many U2R attacks involve
+         reading protected files
+        creating malicious files
+        modifying system files
+         */
+
+
+        // Feature 45: scan error composite — broader Probe scanning indicator
+        double serrorRate    = features[24];
+        double srvSerrorRate = features[25];
+        double rerrorRate    = features[26];
+        double diffSrvRate   = features[34];
+        extended[45] = serrorRate + srvSerrorRate + rerrorRate + diffSrvRate;
+
+        return extended;
+    }
     public static void computeMaxMin(ArrayList <double[]> processed){
 
-        int featuresNum=41;
+        int featuresNum=46;
         trainMax= new double[featuresNum];
         trainMin = new double[featuresNum];
 
@@ -187,7 +235,7 @@ public class Preprocessor{
     public static void normalize(ArrayList <double[]> processed){
 
         for(double[] row :processed){
-            for(int i=0; i<41; i++){
+            for(int i=0; i<46; i++){
                 double range=trainMax[i]-trainMin[i];
 
                 if(range==0){		//all values identical, example feature 1 =[0,0,0,0,0] so max =0, min=0 range =0
@@ -232,10 +280,11 @@ public class Preprocessor{
 
 
                 double[]features =getFeatures(dataset);
+                double[] extendedFeatures = engineerFeatures(features);
 
                 boolean skipRow=false;
 
-                for(double f : features){
+                for(double f : extendedFeatures){
                     if(Double.isNaN(f)){
                         corruptedRow++;
                         skipRow=true;
@@ -250,7 +299,7 @@ public class Preprocessor{
 
                 labels.add(dataset[41].trim());
 
-                processed.add(features);
+                processed.add(extendedFeatures);
             }//end while
 
             System.out.println("Total processed rows: " + processed.size());

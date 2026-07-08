@@ -81,6 +81,92 @@ public class ClassifierEngine{
 
     }//end loadModel
 
+    public static Instances buildBinaryInstances(Instances multiClassInstances){
+
+        List<String> binaryValues = new ArrayList<>();
+        binaryValues.add("normal");
+        binaryValues.add("attack");
+
+        Attribute binaryClass = new Attribute("attack_category", binaryValues);
+
+        ArrayList<Attribute> attributes = new ArrayList<>();
+
+        for(int i =0; i<multiClassInstances.numAttributes()-1;i++){
+            attributes.add(multiClassInstances.attribute(i));
+        }
+        attributes.add(binaryClass);
+
+        Instances binary = new Instances("Binary-" + multiClassInstances.relationName(), attributes,multiClassInstances.numInstances());
+        binary.setClassIndex(binary.numAttributes()-1);
+
+        for(int i=0; i<multiClassInstances.numInstances(); i++){
+            Instance orig = multiClassInstances.instance(i);
+            double[] vals = new double[binary.numAttributes()];
+
+            for(int j =0; j<binary.numAttributes(); j++){
+                vals[j] = orig.value(j);
+            }
+
+            String origClass = multiClassInstances.classAttribute().value((int) orig.classValue());
+
+            vals[binary.numAttributes()-1] = origClass.equals("normal")? 0.0 :1.0;
+
+            DenseInstance inst = new DenseInstance(1.0, vals);
+
+            inst.setDataset(binary);
+            binary.add(inst);
+
+        }
+        System.out.println("Binary instances built: " + binary.numInstances());
+        System.out.println("normal=" + binary.attributeStats(binary.classIndex()).nominalCounts[0]
+                + " attack=" + binary.attributeStats(binary.classIndex()).nominalCounts[1]);
+        return binary;
+
+
+    }
+
+    public static CostSensitiveClassifier buildCostSensitiveBinaryRF(Instances binaryInstances) throws Exception{
+
+        int binaryNumClasses = binaryInstances.numClasses();
+        CostMatrix binaryCostMatrix = new CostMatrix(binaryNumClasses);
+        binaryCostMatrix.initialize();
+
+        int normalBinaryIndex = binaryInstances.classAttribute().indexOfValue("normal");
+        int attackBinaryIndex = binaryInstances.classAttribute().indexOfValue("attack");
+
+        binaryCostMatrix.setCell(normalBinaryIndex, attackBinaryIndex ,1.0);
+        binaryCostMatrix.setCell(attackBinaryIndex, normalBinaryIndex, 50.0);
+
+        RandomForest binaryRF = new RandomForest();
+        binaryRF.setNumFeatures(0);
+        binaryRF.setSeed(1);
+        binaryRF.setNumIterations(100);
+
+        CostSensitiveClassifier binaryCSC = new CostSensitiveClassifier();
+        binaryCSC.setCostMatrix(binaryCostMatrix);
+        binaryCSC.setClassifier(binaryRF);
+        binaryCSC.setMinimizeExpectedCost(true);
+
+        return binaryCSC;
+    }
+    public static String classifyTwoStage(AbstractClassifier binaryClassifier,
+                                          AbstractClassifier multiClassClassifier,
+                                          double[] features,
+                                          Instances binaryInstances,
+                                          Instances multiClassInstances) throws Exception{
+
+        //Stage 1
+        String stage1 = classify(binaryClassifier, features, binaryInstances);
+
+        if (stage1.equals("normal")) {
+            return "normal";
+        }
+
+        // Stage 2
+        return classify(multiClassClassifier, features, multiClassInstances);
+
+
+    }
     private static Instances applySmote(Instances instances, String attackCategoryName, double percentage, int kNeighbors) throws Exception{
 
         SMOTE smote = new SMOTE();
@@ -187,20 +273,20 @@ public class ClassifierEngine{
 
     public static String classify(AbstractClassifier classifier, double[] featureVector, Instances dataStructure) throws Exception{
 
-        DenseInstance instance = new DenseInstance(1.0, new double[42]); //41 features + 1 class attribute
+        DenseInstance instance = new DenseInstance(1.0, new double[47]); //46 features + 1 class attribute
 
         instance.setDataset(dataStructure);//Attach this single row (Instance) to the full dataset structure
 
 
-        for(int i=0; i<41;i++){
+        for(int i=0; i<46;i++){
             instance.setValue(i,featureVector[i]); //[feature0, feature1, ..., feature40, 0] **setValue() belongs to a Weka Instance
         }//end loop
 
-        instance.setMissing(41);//column 41 -> the attack class is unknown and needs to be predicted, in other words, to prevent 0.0  -> "normal"
+        instance.setMissing(46);//column 47 -> the attack class is unknown and needs to be predicted, in other words, to prevent 0.0  -> "normal"
 
 
-//When predicting, Weka only uses the non-class attributes (the first 41 features).
-// because we did setClassIndex(instances.numAttribute()-1) so Weka wont use column 42 to make its prediction
+//When predicting, Weka only uses the non-class attributes (the first 46 features).
+// because we did setClassIndex(instances.numAttribute()-1) so Weka wont use column 47 to make its prediction
 
         double classIndex = classifier.classifyInstance(instance); //Uses the trained model to predict the label of one new data row whose answer is unknown. so after .buildClassifier now we test it. So it may return 0.0 -> "normal"
 

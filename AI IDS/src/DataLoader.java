@@ -22,7 +22,9 @@ public class DataLoader{
                 "dst_host_same_srv_rate", "dst_host_diff_srv_rate",
                 "dst_host_same_src_port_rate", "dst_host_srv_diff_host_rate",
                 "dst_host_serror_rate", "dst_host_srv_serror_rate",
-                "dst_host_rerror_rate", "dst_host_srv_rerror_rate"
+                "dst_host_rerror_rate", "dst_host_srv_rerror_rate",
+                "byte_ratio", "failed_no_login", "privilege_score",
+                "file_access_score", "scan_error_rate"
         };
 
         for(String name : featureNames)			//uploading the attributes(columns)
@@ -51,10 +53,10 @@ public class DataLoader{
             String label = labels.get(i);
 
 
-            String category=Preprocessor.mapCategory(label); ////Convert Attack Name → Category
+            String category=Preprocessor.mapCategory(label); //Convert Attack Name → Category
 
-            double[] instanceValues = new double[42]; //42 values
-            System.arraycopy(featureRow,0,instanceValues,0,41);	 //last row (42) for attack label
+            double[] instanceValues = new double[47]; //47 values
+            System.arraycopy(featureRow,0,instanceValues,0,46);	 //last row (47) for attack label
 
 									/*
 										featureRow (Source): The original array holding your data.
@@ -64,7 +66,7 @@ public class DataLoader{
 										41 (Length): Copy exactly 41 individual elements.
 									*/
 
-            instanceValues[41]=classAttribute.indexOfValue(category); //“For this row, the answer is DoS → store 1 in column 42”
+            instanceValues[46]=classAttribute.indexOfValue(category); //“For this row, the answer is DoS → store 1 in column 46”
 
             DenseInstance instance = new DenseInstance(1.0, instanceValues); //1.0= weight 100% (standard importance), DenseInstance means an instance (a row) with no missing data
 
