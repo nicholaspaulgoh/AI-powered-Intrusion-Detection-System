@@ -12,12 +12,7 @@ public class TrafficInput {
     static int correctCount=0;
     static Map<String, Integer> mapCategoryStats = new HashMap<>();
 
-    public static void startCSVSimulation(
-            String filePath,
-            AbstractClassifier binaryClassifier,
-            AbstractClassifier multiClassifier,
-            Instances binaryStructure,
-            Instances multiClassStructure) throws Exception {
+    public static void startCSVSimulation(String filePath, AbstractClassifier model, Instances dataStructure ) throws Exception {
 
         //Reset to avoid accumulation
         correctCount=0;
@@ -57,11 +52,7 @@ public class TrafficInput {
             //Predicting
             System.out.println("Predicting");
             for (double[] row : features) {
-                String prediction = ClassifierEngine.classifyTwoStage(
-                        binaryClassifier, multiClassifier, row,
-                        binaryStructure, multiClassStructure
-                );
-                predictions.add(prediction);
+                predictions.add(ClassifierEngine.classify(model, row, dataStructure));
             }//end for - Predicting
 
             //Output per row

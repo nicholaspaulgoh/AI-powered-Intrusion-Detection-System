@@ -1,0 +1,104 @@
+Index: AI IDS/src/ClassifierEngine.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/AI IDS/src/ClassifierEngine.java b/AI IDS/src/ClassifierEngine.java
+--- a/AI IDS/src/ClassifierEngine.java
++++ b/AI IDS/src/ClassifierEngine.java	(date 1783331559571)
+@@ -81,6 +81,68 @@
+ 
+     }//end loadModel
+ 
++    public static Instances buildBinaryInstances(Instances multiClassInstances){
++
++        List<String> binaryValues = new ArrayList<>();
++        binaryValues.add("normal");
++        binaryValues.add("attack");
++
++        Attribute binaryClass = new Attribute("attack_category", binaryValues);
++
++        ArrayList<Attribute> attributes = new ArrayList<>();
++
++        for(int i =0; i<multiClassInstances.numAttributes()-1;i++){
++            attributes.add(multiClassInstances.attribute(i));
++        }
++        attributes.add(binaryClass);
++
++        Instances binary = new Instances("Binary-" + multiClassInstances.relationName(), attributes,multiClassInstances.numInstances());
++        binary.setClassIndex(binary.numAttributes()-1);
++
++        for(int i=0; i<multiClassInstances.numInstances(); i++){
++            Instance orig = multiClassInstances.instance(i);
++            double[] vals = new double[binary.numAttributes()];
++
++            for(int j =0; j<binary.numAttributes(); j++){
++                vals[j] = orig.value(j);
++            }
++
++            String origClass = multiClassInstances.classAttribute().value((int) orig.classValue());
++
++            vals[binary.numAttributes()-1] = origClass.equals("normal")? 0.0 :1.0;
++
++            DenseInstance inst = new DenseInstance(1.0, vals);
++
++            inst.setDataset(binary);
++            binary.add(inst);
++
++        }
++        System.out.println("Binary instances built: " + binary.numInstances());
++        System.out.println("normal=" + binary.attributeStats(binary.classIndex()).nominalCounts[0]
++                + " attack=" + binary.attributeStats(binary.classIndex()).nominalCounts[1]);
++        return binary;
++
++
++    }
++
++    public static String classifyTwoStage(AbstractClassifier binaryClassifier,
++                                          AbstractClassifier multiClassClassifier,
++                                          double[] features,
++                                          Instances binaryInstances,
++                                          Instances multiClassInstances) throws Exception{
++
++        //Stage 1
++        String stage1 = classify(binaryClassifier, features, binaryInstances);
++
++        if (stage1.equals("normal")) {
++            return "normal";
++        }
++
++        // Stage 2
++        return classify(multiClassClassifier, features, multiClassInstances);
++
++
++    }
+     private static Instances applySmote(Instances instances, String attackCategoryName, double percentage, int kNeighbors) throws Exception{
+ 
+         SMOTE smote = new SMOTE();
+@@ -142,13 +204,13 @@
+         int u2rIndex=instances.classAttribute().indexOfValue("U2R");
+ 
+         //Penalties for missing R2L
+-        costMatrix.setCell(r2lIndex,normalIndex, 30.0);
++        costMatrix.setCell(r2lIndex,normalIndex, 25.0);
+         costMatrix.setCell(r2lIndex, dosIndex, 5.0);
+         costMatrix.setCell(r2lIndex, probeIndex, 5.0);
+         costMatrix.setCell(r2lIndex, u2rIndex, 10.0);
+ 
+         //Penalties for missing U2L
+-        costMatrix.setCell(u2rIndex,normalIndex, 40.0);
++        costMatrix.setCell(u2rIndex,normalIndex, 35.0);
+         costMatrix.setCell(u2rIndex, dosIndex, 10.0);
+         costMatrix.setCell(u2rIndex, probeIndex, 10.0);
+         costMatrix.setCell(u2rIndex, r2lIndex, 10.0);
+@@ -199,8 +261,8 @@
+         instance.setMissing(46);//column 47 -> the attack class is unknown and needs to be predicted, in other words, to prevent 0.0  -> "normal"
+ 
+ 
+-//When predicting, Weka only uses the non-class attributes (the first 41 features).
+-// because we did setClassIndex(instances.numAttribute()-1) so Weka wont use column 42 to make its prediction
++//When predicting, Weka only uses the non-class attributes (the first 46 features).
++// because we did setClassIndex(instances.numAttribute()-1) so Weka wont use column 47 to make its prediction
+ 
+         double classIndex = classifier.classifyInstance(instance); //Uses the trained model to predict the label of one new data row whose answer is unknown. so after .buildClassifier now we test it. So it may return 0.0 -> "normal"
+ 

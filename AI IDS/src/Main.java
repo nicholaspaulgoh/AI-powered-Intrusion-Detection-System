@@ -11,11 +11,9 @@ public class Main{
     public static void main(String[] args)throws Exception {
 
         String trainPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTrain+.txt";
-
+        String modelPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\models\\random_forest.model";
         String testPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTest+.txt";
 
-        String binaryModelPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\models\\binary_rf.model";
-        String multiModelPath  = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\models\\multiclass_csc_rf.model";
 
         System.out.println("====================================================");
         System.out.println("          AI-Powered IDS — Training Pipeline        ");
@@ -43,53 +41,33 @@ public class Main{
 
 
          */
-        System.out.println("\n[2c] Building binary instances for Stage 1...");
-        Instances binaryInstances = ClassifierEngine.buildBinaryInstances(balancedInstances);
-
-        System.out.println("\n[2d] Training Stage 1 — Binary Random Forest...");
-        CostSensitiveClassifier binaryCSCRF = ClassifierEngine.buildCostSensitiveBinaryRF(binaryInstances);
-        ClassifierEngine.evaluate(binaryCSCRF, "Stage 1 Binary CSC-RF", binaryInstances);
-        //before we did 10-fold cross validation to find the best model (90% train 10% test), now that we have identified the best model, we use all the training data
-        binaryCSCRF.buildClassifier(binaryInstances);
-        ClassifierEngine.saveModel(binaryCSCRF, binaryModelPath);
-
-        System.out.println("\n[2e] Training Stage 2 — Cost-Sensitive Multi-class RF...");
-        CostSensitiveClassifier cscRF = ClassifierEngine.buildCostSensitiveClassifier(balancedInstances);
-        ClassifierEngine.evaluate(cscRF, "Stage 2 Multi-class CSC-RF", balancedInstances);
-        //before we did 10-fold cross validation to find the best model (90% train 10% test), now that we have identified the best model, we use all the training data
-        cscRF.buildClassifier(balancedInstances);
-        ClassifierEngine.saveModel(cscRF, multiModelPath);
+        System.out.println("\n[2c] Building Cost Sensitive Classifier Random Forest");
+        CostSensitiveClassifier csc_rf = ClassifierEngine.buildCostSensitiveClassifier(balancedInstances);
+        ClassifierEngine.evaluate(csc_rf, "Cost Sensitive Random Forest", balancedInstances);
 
         /*
         NaiveBayes nb = new NaiveBayes();
         ClassifierEngine.evaluate(nb, "Naive Bayes", balancedInstances);
     */
 
-        System.out.println("\n[4] Testing saved models...");
-        CostSensitiveClassifier loadedBinary = (CostSensitiveClassifier) ClassifierEngine.loadModel(binaryModelPath);
-        CostSensitiveClassifier loadedMulti = (CostSensitiveClassifier) ClassifierEngine.loadModel(multiModelPath);
+        System.out.println("\n[3] Saving best model...");
+//before we did 10-fold cross validation to find the best model (90% train 10% test), now that we have identified the best model, we use all the training data
+        csc_rf.buildClassifier(balancedInstances);
+        ClassifierEngine.saveModel(csc_rf, modelPath);
 
-
-
+        System.out.println("\n[4] Testing saved model...");
+        CostSensitiveClassifier loadedModel = (CostSensitiveClassifier) ClassifierEngine.loadModel(modelPath); //not every AbstractClassifier is rf
 
 // Classify the first row of training data as a smoke test ("Does the model load correctly and produce a prediction?" *not measuring accuracy)
-        String prediction = ClassifierEngine.classifyTwoStage(
-                loadedBinary, loadedMulti,
-                trainData.get(0),
-                binaryInstances, balancedInstances
-        );
+        String prediction = ClassifierEngine.classify(loadedModel, trainData.get(0), instances);
+
         System.out.println("Smoke test prediction on row 0: " + prediction);
         System.out.println("Attack Category: " + Preprocessor.mapCategory(trainLabel.get(0)));
-
-
 
         System.out.println("\n====================Training Pipeline Complete=========================================");
 
         System.out.println("\n[5] Testing test set evaluation...");
-        TrafficInput.startCSVSimulation(
-                testPath, loadedBinary, loadedMulti,
-                binaryInstances, balancedInstances
-        );
+        TrafficInput.startCSVSimulation(testPath,loadedModel,instances);
 
 
 
