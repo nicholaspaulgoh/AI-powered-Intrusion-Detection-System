@@ -64,6 +64,9 @@ public class Main{
         System.out.println("Smoke test prediction on row 0: " + prediction);
         System.out.println("Attack Category: " + Preprocessor.mapCategory(trainLabel.get(0)));
 
+        System.out.println("\n[Autoencoder Smoke Test]");
+        AnomalyDetector.smokeTest(trainData.get(0));
+
         System.out.println("\n====================Training Pipeline Complete=========================================");
 
         System.out.println("\n[5] Testing test set evaluation...");
