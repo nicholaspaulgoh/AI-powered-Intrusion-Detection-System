@@ -4,47 +4,73 @@ import java.util.concurrent.*;
 public class ConnectionTracker {
 
     private final Map<String, List<Long>> recentConnections = new ConcurrentHashMap<>();
-    private final Map<String, List<Long>> synError = new ConcurrentHashMap<>();
+    private final Map<String, List<Long>> synErrors = new ConcurrentHashMap<>();
+    private final Map<String,List<Long>> rejErrors = new ConcurrentHashMap<>();
+    private final Map<String, List<Long>> serviceConnections = new ConcurrentHashMap<>();
 
+    private static final long  WINDOW_MS =2000;
 
     public int getCount(String dstIp){
-         long now =System.currentTimeMillis();
-         long twoSecondsAgo =now -2000;
-
-       List<Long> times = recentConnections.computeIfAbsent(dstIp, k-> Collections.synchronizedList( new ArrayList<>())); //returns recentConnections or []
-
-        synchronized(times) {
-            times.removeIf(t -> t <= twoSecondsAgo);
-            return times.size();
-        }
+           return getWindowCount(recentConnections,dstIp);
     }// end getCount()
 
-    public void recordConnection(String dstIp, boolean isSynError){
+    public void recordConnection(String dstIp,String service, boolean isSynError, boolean isRejError){
+        long now = System.currentTimeMillis();
 
-        recentConnections.computeIfAbsent(dstIp, k -> Collections.synchronizedList(new ArrayList<>())).add(System.currentTimeMillis());
+        recentConnections.computeIfAbsent(dstIp, k -> Collections.synchronizedList(new ArrayList<>())).add(now);
 
-
+        serviceConnections.computeIfAbsent(dstIp +":" + service, k-> Collections.synchronizedList(new ArrayList<>())).add(now);
         if(isSynError){
-            synError.computeIfAbsent(dstIp, k-> Collections.synchronizedList(new ArrayList<>())).add(System.currentTimeMillis());
+            synErrors.computeIfAbsent(dstIp, k-> Collections.synchronizedList(new ArrayList<>())).add(now);
         }//end
 
+        if(isRejError){
+            rejErrors.computeIfAbsent(dstIp, k -> Collections.synchronizedList(new ArrayList<>())).add(now);
+        }
 
     }// end recordConnection
 
     public double getSErrorRate(String dstIp){
-        long now =System.currentTimeMillis();
-        long twoSecondsAgo =now -2000;
 
        int total= getCount(dstIp);
        if(total ==0) return 0.0;
 
-       List<Long> synErrorCount = synError.computeIfAbsent(dstIp,k-> Collections.synchronizedList(new ArrayList<>()));
-       int errors;
-       synchronized(synErrorCount) {
-           synErrorCount.removeIf(t -> t <= twoSecondsAgo);
-          errors= synErrorCount.size();
-       }
-
-       return (double)errors/total;
+       int serrors = getWindowCount(synErrors, dstIp);
+       return (double)serrors/total;
     }//getSErrorRate
+
+    public double getRErrorRate(String dstIp){
+
+        int total= getCount(dstIp);
+        if(total ==0) return 0.0;
+
+        int rerrors = getWindowCount(synErrors, dstIp);
+        return (double)rerrors/total;
+    }//getRErrorRate
+
+    public int getSrvCount(String dstIp, String service){
+
+        return getWindowCount(serviceConnections,dstIp +":" + service);
+    }//getSrvCount
+
+    public double getSameSrvRate(String dstIp, String service){
+
+        double total = getCount(dstIp);
+        if(total==0.0) return 0.0;
+
+        return getSrvCount(dstIp, service)/total;
+
+    }//getSameSrvRate
+
+    private int getWindowCount(Map <String, List<Long>> map, String key){
+        long cutoff = System.currentTimeMillis() - WINDOW_MS;
+
+        List<Long> times= map.computeIfAbsent(key, k -> Collections.synchronizedList(new ArrayList<>()));
+
+        synchronized(times){
+
+            times.removeIf(time -> time <=cutoff);
+            return times.size();
+        }
+    }// end getWindowCount
 }//end ConnectionTracker

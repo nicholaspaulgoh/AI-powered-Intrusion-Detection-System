@@ -255,7 +255,21 @@ public class Preprocessor{
         System.out.println("Total rows normalize: " + processed.size());
     }// end normalize
 
+    public static double[] normalizeRow(double[] features){
+        double[] normalized = new double[features.length];
 
+     for(int i=0; i<features.length;i++) {
+         double range = trainMax[i] - trainMin[i];
+
+         if(range ==0){
+             normalized[i] =0.0;
+         }else{
+             normalized[i] = Math.min((normalized[i]-trainMin[i])/range,1.0);
+             if (normalized[i] < 0) normalized[i] = 0.0;
+         }
+     }
+        return normalized;
+    }
 
     public static ArrayList<double[]> processRow(String filepath, ArrayList<String>labels){
 

@@ -1,5 +1,7 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.pcap4j.core.*;
+import org.pcap4j.core.PcapNetworkInterface.PromiscuousMode;
 import weka.core.*;
 import weka.classifiers.bayes.*;
 import weka.classifiers.trees.*;
@@ -71,6 +73,24 @@ public class Main{
 
         System.out.println("\n[5] Testing test set evaluation...");
         TrafficInput.startCSVSimulation(testPath,loadedModel,instances);
+
+        System.out.println("\n[6] Starting live packet capture...");
+        String liveModelPath = modelPath;
+        LiveDetection.initialize(liveModelPath);
+        NetworkCapture.listInterfaces();
+        System.out.println("Choose interface (or -1 to skip live capture): ");
+        int ifaceChoice= new Scanner(System.in).nextInt();
+
+        if(ifaceChoice >=0){
+            PcapNetworkInterface device = NetworkCapture.interfaces.get(ifaceChoice);
+            PcapHandle handle = device.openLive(65536, PromiscuousMode.PROMISCUOUS, 10);
+            System.out.println("Capturing on: " + device.getDescription());
+
+            handle.loop(-1, (RawPacketListener) rawPacket ->
+                    NetworkCapture.processPacket(rawPacket));
+            handle.close();
+        }
+
 
 
 
