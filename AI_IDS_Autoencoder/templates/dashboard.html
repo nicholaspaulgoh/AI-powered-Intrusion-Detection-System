@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered IDS — Live Monitor</title>
+<style>
+  /* ── Reset & base ─────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0D1117;
+    --surface:   #1C2333;
+    --surface2:  #161B27;
+    --border:    #30363D;
+    --accent:    #58A6FF;
+    --normal:    #3FB950;
+    --attack:    #F85149;
+    --warning:   #D29922;
+    --muted:     #8B949E;
+    --text:      #E6EDF3;
+    --mono:      'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --sans:      'Inter', system-ui, sans-serif;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── Header ───────────────────────────────────────────────── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* Signature element: pulse indicator */
+  .pulse-ring {
+    position: relative;
+    width: 12px;
+    height: 12px;
+  }
+  .pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--normal);
+    border-radius: 50%;
+  }
+  .pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--normal);
+    border-radius: 50%;
+    animation: pulse 2s ease-out infinite;
+    opacity: 0;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2);   opacity: 0;   }
+  }
+  .pulse-ring.alert::before { background: var(--attack); }
+  .pulse-ring.alert::after  { border-color: var(--attack); }
+
+  header h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  header h1 span {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .status-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--normal);
+    color: var(--normal);
+    letter-spacing: 0.05em;
+  }
+  .status-pill.offline {
+    border-color: var(--muted);
+    color: var(--muted);
+  }
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  main { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── Stat cards ───────────────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .stat-card.highlight-normal  .value { color: var(--normal); }
+  .stat-card.highlight-attack  .value { color: var(--attack); }
+  .stat-card.highlight-warning .value { color: var(--warning); }
+  .stat-card.highlight-accent  .value { color: var(--accent); }
+
+  /* ── Detection table ──────────────────────────────────────── */
+  .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .table-header h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .clear-btn {
+    font-size: 12px;
+    font-family: var(--mono);
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .clear-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+
+  thead tr {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(88,166,255,0.04); }
+
+  td {
+    padding: 9px 14px;
+    white-space: nowrap;
+    color: var(--text);
+  }
+
+  /* Row colouring by classification */
+  tr.row-normal    td:first-child { border-left: 2px solid var(--normal); }
+  tr.row-attack    td:first-child { border-left: 2px solid var(--attack); }
+  tr.row-anomaly   td:first-child { border-left: 2px solid var(--warning); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .badge-normal  { background: rgba(63,185,80,0.15);  color: var(--normal); }
+  .badge-dos     { background: rgba(248,81,73,0.15);  color: var(--attack); }
+  .badge-probe   { background: rgba(248,81,73,0.12);  color: #FF7B72; }
+  .badge-r2l     { background: rgba(210,153,34,0.15); color: var(--warning); }
+  .badge-u2r     { background: rgba(210,153,34,0.20); color: #E3B341; }
+  .badge-unknown { background: rgba(139,148,158,0.15); color: var(--muted); }
+
+  .anomaly-yes { color: var(--warning); }
+  .anomaly-no  { color: var(--muted); }
+
+  .error-val { color: var(--muted); }
+
+  .empty-state {
+    padding: 48px;
+    text-align: center;
+    color: var(--muted);
+    font-family: var(--sans);
+  }
+  .empty-state p { margin-top: 8px; font-size: 13px; }
+
+  /* ── Threshold info ───────────────────────────────────────── */
+  .threshold-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .threshold-bar .val {
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="pulse-ring" id="pulseRing"></div>
+    <h1>AI-Powered IDS &nbsp;<span>// Live Monitor</span></h1>
+  </div>
+  <div class="status-pill offline" id="statusPill">CONNECTING</div>
+</header>
+
+<main>
+
+  <!-- Stat cards -->
+  <div class="stat-grid">
+    <div class="stat-card highlight-accent">
+      <div class="label">Total Packets</div>
+      <div class="value" id="statTotal">0</div>
+    </div>
+    <div class="stat-card highlight-normal">
+      <div class="label">Normal</div>
+      <div class="value" id="statNormal">0</div>
+    </div>
+    <div class="stat-card highlight-attack">
+      <div class="label">DoS</div>
+      <div class="value" id="statDoS">0</div>
+    </div>
+    <div class="stat-card highlight-attack">
+      <div class="label">Probe</div>
+      <div class="value" id="statProbe">0</div>
+    </div>
+    <div class="stat-card highlight-warning">
+      <div class="label">R2L</div>
+      <div class="value" id="statR2L">0</div>
+    </div>
+    <div class="stat-card highlight-warning">
+      <div class="label">U2R</div>
+      <div class="value" id="statU2R">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Autoencoder Anomalies</div>
+      <div class="value" id="statAnomalies">0</div>
+    </div>
+  </div>
+
+  <!-- Threshold info -->
+  <div class="threshold-bar">
+    <span>Anomaly threshold:</span>
+    <span class="val">{{ threshold }}</span>
+    <span>·</span>
+    <span>Reconstruction error above this value triggers anomaly flag</span>
+  </div>
+
+  <!-- Detection table -->
+  <div class="table-header">
+    <h2>Live Detection Feed</h2>
+    <button class="clear-btn" onclick="clearTable()">Clear</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Source IP</th>
+          <th>Destination IP</th>
+          <th>Service</th>
+          <th>Flag</th>
+          <th>Classification</th>
+          <th>Autoencoder</th>
+          <th>Recon Error</th>
+        </tr>
+      </thead>
+      <tbody id="detectionBody">
+        <tr id="emptyRow">
+          <td colspan="8">
+            <div class="empty-state">
+              <div>⬡</div>
+              <p>Waiting for live traffic — start packet capture in Java to see detections here.</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+  const MAX_ROWS = 200; // keep last 200 detections visible
+  let rowCount = 0;
+  let connected = false;
+
+  // ── SSE connection ──────────────────────────────────────────
+  const evtSource = new EventSource("/stream");
+
+  evtSource.onopen = () => {
+    connected = true;
+    document.getElementById("statusPill").textContent = "LIVE";
+    document.getElementById("statusPill").classList.remove("offline");
+  };
+
+  evtSource.onerror = () => {
+    connected = false;
+    document.getElementById("statusPill").textContent = "OFFLINE";
+    document.getElementById("statusPill").classList.add("offline");
+    document.getElementById("pulseRing").classList.remove("alert");
+  };
+
+  evtSource.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+
+    if (data.type === "stats") {
+      updateStats(data.stats);
+    } else if (data.type === "detection") {
+      addRow(data);
+      updateStats(null); // stats update comes in next event
+    }
+    // heartbeat: no action needed
+  };
+
+  // ── Stat updater ────────────────────────────────────────────
+  function updateStats(stats) {
+    if (!stats) return;
+    document.getElementById("statTotal").textContent    = stats.total;
+    document.getElementById("statNormal").textContent   = stats.normal;
+    document.getElementById("statDoS").textContent      = stats.DoS;
+    document.getElementById("statProbe").textContent    = stats.Probe;
+    document.getElementById("statR2L").textContent      = stats.R2L;
+    document.getElementById("statU2R").textContent      = stats.U2R;
+    document.getElementById("statAnomalies").textContent = stats.anomalies;
+  }
+
+  // ── Badge helpers ────────────────────────────────────────────
+  function classBadge(cls) {
+    const map = {
+      normal:  ["badge-normal",  "normal"],
+      DoS:     ["badge-dos",     "DoS"],
+      Probe:   ["badge-probe",   "Probe"],
+      R2L:     ["badge-r2l",     "R2L"],
+      U2R:     ["badge-u2r",     "U2R"],
+    };
+    const [badgeClass, label] = map[cls] || ["badge-unknown", cls || "unknown"];
+    return `<span class="badge ${badgeClass}">${label}</span>`;
+  }
+
+  function rowClass(classification, verdict) {
+    if (verdict === "anomaly") return "row-anomaly";
+    if (classification === "normal") return "row-normal";
+    return "row-attack";
+  }
+
+  // ── Add detection row ────────────────────────────────────────
+  function addRow(d) {
+    const tbody = document.getElementById("detectionBody");
+
+    // Remove empty state row on first detection
+    const emptyRow = document.getElementById("emptyRow");
+    if (emptyRow) emptyRow.remove();
+
+    // Pulse the ring — red if attack, green if normal
+    const pulse = document.getElementById("pulseRing");
+    pulse.classList.toggle("alert", d.classification !== "normal");
+
+    const tr = document.createElement("tr");
+    tr.className = rowClass(d.classification, d.verdict);
+
+    const anomalyHtml = d.verdict === "anomaly"
+      ? `<span class="anomaly-yes">⚠ anomaly</span>`
+      : `<span class="anomaly-no">— normal</span>`;
+
+    tr.innerHTML = `
+      <td>${d.timestamp}</td>
+      <td>${d.srcIp}</td>
+      <td>${d.dstIp}</td>
+      <td>${d.service}</td>
+      <td>${d.flag}</td>
+      <td>${classBadge(d.classification)}</td>
+      <td>${anomalyHtml}</td>
+      <td class="error-val">${d.error.toFixed(6)}</td>
+    `;
+
+    // Prepend — newest at top
+    tbody.insertBefore(tr, tbody.firstChild);
+    rowCount++;
+
+    // Trim old rows
+    while (rowCount > MAX_ROWS) {
+      tbody.removeChild(tbody.lastChild);
+      rowCount--;
+    }
+  }
+
+  // ── Clear table ──────────────────────────────────────────────
+  function clearTable() {
+    const tbody = document.getElementById("detectionBody");
+    tbody.innerHTML = `
+      <tr id="emptyRow">
+        <td colspan="8">
+          <div class="empty-state">
+            <div>⬡</div>
+            <p>Table cleared. Waiting for new detections.</p>
+          </div>
+        </td>
+      </tr>`;
+    rowCount = 0;
+  }
+</script>
+</body>
+</html>
