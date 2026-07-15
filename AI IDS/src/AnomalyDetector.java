@@ -1,128 +1,157 @@
 import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 
 public class AnomalyDetector {
+    private static final String FLASK_URL ="http://localhost:5000/detect";
+    private static final String HEALTH_URL = "http://localhost:5000/health";
 
-    // Path to your Python executable inside the venv
-    private static final String PYTHON_PATH =
-            "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\" +
-                    "AI_IDS_Autoencoder\\.venv\\Scripts\\python.exe";
-
-    // Path to detect_anomaly.py
-    private static final String SCRIPT_PATH =
-            "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\" +
-                    "AI_IDS_Autoencoder\\detect_anomaly.py";
+    //Create one client to prevent waste
+    //connectTimeout : "If you cannot establish a connection within 5 seconds, stop trying and throw an exception."
+    //prevents it from trying to connect forever
+    //Duration.ofSeconds : instead of writing 5000
+    private static final HttpClient client = HttpClient.newBuilder()
+                                                         .connectTimeout(Duration.ofSeconds(5))
+                                                         .build();
 
 
     public static class AnomalyResult{
-        public final String verdict; // "normal" or "anomaly"
+        public final String verdict;
         public final double error;
 
         public AnomalyResult(String verdict, double error){
             this.verdict=verdict;
             this.error=error;
 
+
         }//end constructor
 
         public boolean isAnomaly(){
             return verdict.equals("anomaly");
-        }//end isAnomaly
+        }
 
         @Override
         public String toString(){
-            return String.format("%s (error=%.6f)", verdict, error);
+            return String.format("%s (error=%.6f)", verdict,error);
+        }
+    }//end class Anomaly Result
 
-        }//end toString
-    }//end AnomalyDetector
+    public static AnomalyResult detect(double[] features, String srcIp, String dstIp,
+                                       String service, String flag, String classification) throws Exception{
 
-    /*
-     * Calls detect_anomaly.py with the 46 engineered features.
-     * Features must be in the same order as Java's engineerFeatures()
-     * and must NOT yet be normalised — Python handles normalisation internally.
-     *
-     * @param features double[46] — raw engineered feature vector
-     * @return AnomalyResult with verdict and reconstruction error
-     */
+        if(features.length !=46){
+            throw new IllegalArgumentException("Expected 46 features, got " + features.length);
+        }
+        //Preparing the data
+        // Build JSON body manually — no external library needed
+        //String Builder is use for performance, concatenation of new String will
+        // create a new memory every time it runs ->unnecessary memory allocation
+        StringBuilder sb = new StringBuilder();
 
-    public static AnomalyResult detect(double[] features) throws Exception{
+        sb.append("{");
+        sb.append("\"features\":[");
 
-        if(features.length != 46){
-            throw new IllegalArgumentException("Expected 46 features, got :" + features.length);
+        for(int i=0; i<features.length;i++){
+            sb.append(features[i]);
+
+            if(i<features.length-1)
+                sb.append(",");
+        }
+        sb.append("],");
+        sb.append("\"srcIp\":\"").append(srcIp).append("\",");
+        sb.append("\"dstIp\":\"").append(dstIp).append("\",");
+        sb.append("\"service\":\"").append(service).append("\",");
+        sb.append("\"flag\":\"").append(flag).append("\",");
+        sb.append("\"classification\":\"").append(classification).append("\"");
+        sb.append("}");
+
+        String json=sb.toString();
+
+        //Preparing the request (like a package/ envelope for the data
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(FLASK_URL)) //where does the request go?
+                .timeout(Duration.ofSeconds(10))//after 10 seconds java will throw an error -> too long
+                .header("Content-Type","application/json") //like a packaging label
+                .POST(HttpRequest.BodyPublishers.ofString(json)) //BodyPublisher -> HTTP client expects something capable of publishing (streaming) the request body.
+                .build();
+
+        //Sending the request and storing the response in HttpResponse<String>
+        HttpResponse<String> response =client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200){
+            throw new RuntimeException("Flask returned HTTP " +
+                    response.statusCode() + ": " + response.body());
         }
 
-        // --- Build the command ---
-        // ProcessBuilder takes a list: ["python.exe", "script.py", "f0", "f1", ...]
-
-        String[] command =new String[48]; //python + script name + 46 features
-        command[0] = PYTHON_PATH;
-        command[1]= SCRIPT_PATH;
-
-        for(int i=0; i<features.length; i++){
-            command[i+2] = String.valueOf(features[i]);
-        }
-
-        // process is basically a program
-        ProcessBuilder pb = new ProcessBuilder(command);
-        // send this to python terminal : python detect_anomaly.py 0 1 0 0 181 5450 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 8 8 0 0 0 0 1 0 0 9 9 1 0 0.11 0 0 0 0 0 181 0 0 0 0
-
-        // Merge stderr into stdout so Python warnings don't block the pipe
-        // (TF warnings go to stderr — without this they can cause deadlock)
-        pb.redirectErrorStream(true);
-
-        // --- Start the process ---
-        Process process = pb.start();
-
-        // --- Read stdout ---
-        // Python prints one line: "verdict|error" e.g. "anomaly|0.023456"
-        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-        String line;
-        String resultLine =null;
-
-        while((line=br.readLine()) != null){
-            // Skip any TF warning lines, grab the verdict line
-            if(line.startsWith("normal") || line.startsWith("anomaly") || line.startsWith("ERROR")){
-                resultLine = line;
-            }
-        }
-
-        process.waitFor();
-
-        if(resultLine==null){
-           throw new RuntimeException("No output from detect_anomaly.py");
-        }
-
-        if(resultLine.startsWith("ERROR")){
-            throw new RuntimeException("Python error: " + resultLine);
-        }
-
-        // Split "anomaly|0.023456" into ["anomaly", "0.023456"]
-        String[] parts=resultLine.split("\\|");
-
-        if (parts.length != 2) {
-            throw new RuntimeException("Unexpected output format: " + resultLine);
-        }
-
-        String verdict= parts[0].trim();
-        double error = Double.parseDouble(parts[1].trim());
-
+        //extracting the values from the JSON Response
+        String body=response.body(); //{"verdict":"normal","error":0.001234}
+        String verdict = extractJsonString(body,"verdict");
+        double error = extractJsonDouble(body,"error");
         return new AnomalyResult(verdict,error);
-
-
-
     }//end detect
 
-    public static void  smokeTest( double[] featureVector){
+    private static AnomalyResult detect(double[]featureVector) throws Exception{
+        return detect(featureVector, "?", "?", "?", "?", "unknown");
+    }
+    public static boolean isFlaskRunning(){
 
-        try{
-            AnomalyResult result= detect(featureVector);
-            System.out.println("Verdict: " + result.verdict);
-            System.out.printf("\nReconstruction Error: %.6f%n", result.error);
-            System.out.println("is Anomaly? -> " + result.isAnomaly());
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(HEALTH_URL))
+                    .timeout(Duration.ofSeconds(3))
+                    .GET()
+                    .build();
 
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+            return response.statusCode() == 200;
         }catch(Exception ex1){
-            System.out.println("Smoke test failed: " + ex1.getMessage());
+            return false;
         }
     }
 
-}
+    public static void  smokeTest(double[] featureVector){
+
+            if (!isFlaskRunning()) {
+                System.out.println("Flask is not running at " + FLASK_URL);
+                System.out.println("Start it with: python flask_server.py");
+                return;
+            }
+
+            try{
+                AnomalyResult result = detect(featureVector);
+                System.out.println("Verdict:             " + result.verdict);
+                System.out.printf ("Reconstruction error: %.6f%n", result.error);
+                System.out.println("Is anomaly:          " + result.isAnomaly());
+                } catch (Exception e) {
+                System.out.println("Smoke test failed: " + e.getMessage());
+                }
+
+    }
+    private static String extractJsonString(String json, String key){
+        String search ="\"" + key + "\":\""; //end "verdict":"
+        int start =json.indexOf(search) +search.length(); //12
+        int end=json.indexOf("\"",start); //search for " starting from the start point
+        return json.substring(start,end); //cuts the result ex normal, end is exclusive
+    }//end extractJsonString
+
+    //reminder: numbers in json don't have quotation marks
+    private static double extractJsonDouble(String json,String key){
+        String search = "\""+ key + "\":";
+        int start =json.indexOf(search) + search.length();
+        int commaEnd = json.indexOf(",",start);
+        int braceEnd =json.indexOf("}", start);
+
+        //{
+        //    "error":0.001234,
+        //    "threshold":0.005
+        //}
+        //there would be a comma hence:
+        int end = (commaEnd ==-1)? braceEnd: Math.min(commaEnd,braceEnd);
+        String val = json.substring(start,end).replace(",", "").trim();
+        return Double.parseDouble(val);
+    }
+}//end class AnomalyDetector

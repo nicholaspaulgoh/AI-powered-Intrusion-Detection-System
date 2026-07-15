@@ -61,6 +61,7 @@ public class NetworkCapture{
                 service= portToService(dstPort);
             }//end if
 
+
             int payloadLength = ipPacket.getPayload() !=null ? ipPacket.getPayload().length(): 0; //Payload = everything inside IP after the header, and may be null if no deeper protocol is parsed.
 
             double[] features = buildFeatureVector(srcIp,dstIp,protocol,srcPort,dstPort,flag,service,payloadLength);
@@ -205,7 +206,7 @@ public class NetworkCapture{
 
         // Capture 100 packets then stop (-1 = capture forever)
         handle.loop(100, (RawPacketListener) rawPacket ->{
-            processPacket(rawPacket, handle);
+            processPacket(rawPacket);
         });
 
         handle.close();

@@ -12,6 +12,13 @@ public class Main{
 
     public static void main(String[] args)throws Exception {
 
+        System.out.println("[Startup] Checking Flask connection...");
+        if (!AnomalyDetector.isFlaskRunning()) {
+            System.out.println("WARNING: Flask is not running. " +
+                    "Start flask_server.py before running live capture.");
+            System.out.println("Continuing without autoencoder...");
+        }
+
         String trainPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTrain+.txt";
         String modelPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\models\\random_forest.model";
         String testPath = "C:\\Users\\SAUS\\Documents\\AI-powered-Intrusion-Detection-System\\data\\KDDTest+.txt";
@@ -40,9 +47,9 @@ public class Main{
         tree.setMinNumObj(2); //Don't create leaves with fewer than 2 training examples.
 
         ClassifierEngine.evaluate(tree, "J48 Decision Tree", balancedInstances );
+        */
 
 
-         */
         System.out.println("\n[2c] Building Cost Sensitive Classifier Random Forest");
         CostSensitiveClassifier csc_rf = ClassifierEngine.buildCostSensitiveClassifier(balancedInstances);
         ClassifierEngine.evaluate(csc_rf, "Cost Sensitive Random Forest", balancedInstances);
@@ -50,7 +57,7 @@ public class Main{
         /*
         NaiveBayes nb = new NaiveBayes();
         ClassifierEngine.evaluate(nb, "Naive Bayes", balancedInstances);
-    */
+        */
 
         System.out.println("\n[3] Saving best model...");
 //before we did 10-fold cross validation to find the best model (90% train 10% test), now that we have identified the best model, we use all the training data

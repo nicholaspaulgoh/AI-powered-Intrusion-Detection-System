@@ -35,9 +35,9 @@ public class LiveDetection {
        try {
            double[] normalized= Preprocessor.normalizeRow(rawEngineered);
 
-           AnomalyDetector.AnomalyResult anomaly = AnomalyDetector.detect(normalized);
+           String classification = ClassifierEngine.classify(classifier,normalized,instancesStructure);
 
-           String classification = ClassifierEngine.classify(classifier,rawEngineered,instancesStructure);
+           AnomalyDetector.AnomalyResult anomaly = AnomalyDetector.detect(rawEngineered, srcIp,dstIp, service, flag,classification);
 
            String anomalyTag = anomaly.isAnomaly() ? "⚠ ANOMALY" : "  normal ";
            System.out.printf("[%s] %-15s -> %-15s svc=%-10s flag=%-4s class=%-6s autoencoder=%s (err=%.4f)%n ",
