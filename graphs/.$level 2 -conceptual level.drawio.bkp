@@ -1,0 +1,79 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="q9ANgexLpbhSXxlZbUC8">
+    <mxGraphModel dx="981" dy="674" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000033" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s0px90kRxc0j6btWd59R-7" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;startArrow=oval;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#F67B00;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;gradientColor=#ffd966;fillColor=#fff2cc;gradientDirection=north;strokeColor=#F67B00;strokeWidth=3;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Main.java&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="270" x="279" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-9" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=oval;startFill=1;endArrow=none;endFill=0;strokeColor=#F67B00;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="205" y="160" />
+            </Array>
+            <mxPoint x="210" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-16" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F67B00;startArrow=oval;startFill=1;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="205" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#F67B00;gradientColor=#ffd966;strokeWidth=3;" value="&lt;b&gt;Preprocessor.java&lt;/b&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;loadCSV()&lt;/li&gt;&lt;li&gt;encode()&lt;/li&gt;&lt;li&gt;normalize()&lt;/li&gt;&lt;li&gt;minMax()&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="130" x="140" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-11" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;startArrow=oval;startFill=1;strokeColor=#F67B00;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-18" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F67B00;startArrow=oval;startFill=1;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#F67B00;gradientColor=#ffd966;arcSize=16;strokeWidth=3;" value="&lt;b&gt;DataLoader.java&lt;/b&gt;&lt;div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;ul&gt;&lt;li&gt;buildInstances()&lt;/li&gt;&lt;li&gt;set class attribute&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="130" x="349" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-13" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;startArrow=oval;startFill=1;strokeColor=#F67B00;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="614" y="160" />
+            </Array>
+            <mxPoint x="610" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-20" edge="1" parent="1" source="s0px90kRxc0j6btWd59R-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F67B00;startArrow=oval;startFill=1;strokeWidth=3;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="614.5" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#F67B00;strokeWidth=3;" value="&lt;b&gt;ClassifierEngine.java&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;evaluate()&lt;/li&gt;&lt;li&gt;saveModel()&lt;/li&gt;&lt;li&gt;loadModel()&lt;/li&gt;&lt;li&gt;classify()&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="131" x="549" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-14" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;startArrow=none;startFill=0;startSize=6;strokeColor=#F67B00;strokeWidth=3;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points" />
+            <mxPoint x="210" y="160" as="sourcePoint" />
+            <mxPoint x="610" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#F67B00;strokeWidth=3;" value="ArrayList&amp;lt;double[ ]&amp;gt;&lt;div&gt;+&lt;/div&gt;&lt;div&gt;Labels&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="150" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#F67B00;strokeWidth=3;" value="Weka&lt;div&gt;Instances&lt;/div&gt;&lt;div&gt;Object&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="359" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="s0px90kRxc0j6btWd59R-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#F67B00;strokeWidth=3;" value="MODEL File&amp;nbsp;&lt;div&gt;on disk&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="554.5" y="490" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

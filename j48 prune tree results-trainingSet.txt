@@ -1,0 +1,967 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     KDDTrain+.txt
+Instances:    125973
+Attributes:   43
+              att1
+              att2
+              att3
+              att4
+              att5
+              att6
+              att7
+              att8
+              att9
+              att10
+              att11
+              att12
+              att13
+              att14
+              att15
+              att16
+              att17
+              att18
+              att19
+              att20
+              att21
+              att22
+              att23
+              att24
+              att25
+              att26
+              att27
+              att28
+              att29
+              att30
+              att31
+              att32
+              att33
+              att34
+              att35
+              att36
+              att37
+              att38
+              att39
+              att40
+              att41
+              att42
+              att43
+Test mode:    evaluate on training data
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+att5 <= 8
+|   att23 <= 2
+|   |   att37 <= 0.48
+|   |   |   att2 = tcp
+|   |   |   |   att33 <= 2
+|   |   |   |   |   att38 <= 0.44
+|   |   |   |   |   |   att32 <= 71
+|   |   |   |   |   |   |   att38 <= 0.07
+|   |   |   |   |   |   |   |   att35 <= 0.87
+|   |   |   |   |   |   |   |   |   att12 <= 0
+|   |   |   |   |   |   |   |   |   |   att6 <= 602: normal (42.0/3.0)
+|   |   |   |   |   |   |   |   |   |   att6 > 602: warezmaster (3.0/1.0)
+|   |   |   |   |   |   |   |   |   att12 > 0: buffer_overflow (2.0)
+|   |   |   |   |   |   |   |   att35 > 0.87
+|   |   |   |   |   |   |   |   |   att40 <= 0.58: normal (2.0)
+|   |   |   |   |   |   |   |   |   att40 > 0.58: ipsweep (136.0)
+|   |   |   |   |   |   |   att38 > 0.07
+|   |   |   |   |   |   |   |   att25 <= 0.25: portsweep (22.0)
+|   |   |   |   |   |   |   |   att25 > 0.25: neptune (2.0/1.0)
+|   |   |   |   |   |   att32 > 71
+|   |   |   |   |   |   |   att36 <= 0.01
+|   |   |   |   |   |   |   |   att40 <= 0.98
+|   |   |   |   |   |   |   |   |   att12 <= 0
+|   |   |   |   |   |   |   |   |   |   att3 = ftp_data: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = other: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = private
+|   |   |   |   |   |   |   |   |   |   |   att35 <= 0.04: portsweep (10.0)
+|   |   |   |   |   |   |   |   |   |   |   att35 > 0.04: satan (5.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = http: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = remote_job: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = name: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = netbios_ns: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = eco_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = mtp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = telnet: normal (25.0)
+|   |   |   |   |   |   |   |   |   |   att3 = finger
+|   |   |   |   |   |   |   |   |   |   |   att23 <= 1: normal (10.0)
+|   |   |   |   |   |   |   |   |   |   |   att23 > 1: satan (2.0)
+|   |   |   |   |   |   |   |   |   |   att3 = domain_u: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = supdup: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = uucp_path: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = Z39_50: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = smtp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = csnet_ns: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = uucp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = netbios_dgm: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = urp_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = auth: normal (1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = domain: normal (1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ftp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = bgp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ldap: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ecr_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = gopher: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = vmnet: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = systat: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = http_443: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = efs: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = whois: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = imap4: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = iso_tsap: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = echo: portsweep (1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = klogin: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = link: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = sunrpc: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = login: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = kshell: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = sql_net: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = time: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = hostnames: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = exec: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ntp_u: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = discard: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = nntp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = courier: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ctf: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = ssh: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = daytime: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = shell: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = netstat: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = pop_3: normal (1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = nnsp: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = IRC: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = pop_2: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = printer: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = tim_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = pm_dump: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = red_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = netbios_ssn: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = rje: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = X11: normal (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att3 = urh_i: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = http_8001: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = aol: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = http_2784: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = tftp_u: normal (0.0)
+|   |   |   |   |   |   |   |   |   |   att3 = harvest: normal (0.0)
+|   |   |   |   |   |   |   |   |   att12 > 0: satan (4.0)
+|   |   |   |   |   |   |   |   att40 > 0.98: neptune (3.0)
+|   |   |   |   |   |   |   att36 > 0.01: portsweep (2391.0)
+|   |   |   |   |   att38 > 0.44
+|   |   |   |   |   |   att35 <= 0.59
+|   |   |   |   |   |   |   att39 <= 0.5
+|   |   |   |   |   |   |   |   att23 <= 1: normal (7.0)
+|   |   |   |   |   |   |   |   att23 > 1: portsweep (2.0)
+|   |   |   |   |   |   |   att39 > 0.5
+|   |   |   |   |   |   |   |   att4 = SF: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = S0
+|   |   |   |   |   |   |   |   |   att7 <= 0: neptune (29.0)
+|   |   |   |   |   |   |   |   |   att7 > 0: land (3.0/1.0)
+|   |   |   |   |   |   |   |   att4 = REJ: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = RSTR: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = SH: imap (2.0)
+|   |   |   |   |   |   |   |   att4 = RSTO: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = S1: normal (1.0)
+|   |   |   |   |   |   |   |   att4 = RSTOS0: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = S3: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = S2: neptune (0.0)
+|   |   |   |   |   |   |   |   att4 = OTH: neptune (0.0)
+|   |   |   |   |   |   att35 > 0.59: nmap (257.0/1.0)
+|   |   |   |   att33 > 2
+|   |   |   |   |   att38 <= 0.89
+|   |   |   |   |   |   att43 <= 14
+|   |   |   |   |   |   |   att40 <= 0.09
+|   |   |   |   |   |   |   |   att36 <= 0.25
+|   |   |   |   |   |   |   |   |   att12 <= 0: normal (71.0/1.0)
+|   |   |   |   |   |   |   |   |   att12 > 0: satan (2.0)
+|   |   |   |   |   |   |   |   att36 > 0.25
+|   |   |   |   |   |   |   |   |   att1 <= 0
+|   |   |   |   |   |   |   |   |   |   att6 <= 1038: ftp_write (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att6 > 1038
+|   |   |   |   |   |   |   |   |   |   |   att37 <= 0.03: buffer_overflow (2.0)
+|   |   |   |   |   |   |   |   |   |   |   att37 > 0.03: normal (5.0/1.0)
+|   |   |   |   |   |   |   |   |   att1 > 0: warezmaster (16.0/1.0)
+|   |   |   |   |   |   |   att40 > 0.09
+|   |   |   |   |   |   |   |   att32 <= 64: ipsweep (35.0)
+|   |   |   |   |   |   |   |   att32 > 64: portsweep (21.0/1.0)
+|   |   |   |   |   |   att43 > 14
+|   |   |   |   |   |   |   att39 <= 0.18: normal (3158.0)
+|   |   |   |   |   |   |   att39 > 0.18
+|   |   |   |   |   |   |   |   att3 = ftp_data: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = other: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = private: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = http: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = remote_job: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = name: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = netbios_ns: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = eco_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = mtp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = telnet: neptune (1.0)
+|   |   |   |   |   |   |   |   att3 = finger: normal (12.0)
+|   |   |   |   |   |   |   |   att3 = domain_u: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = supdup: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = uucp_path: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = Z39_50: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = smtp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = csnet_ns: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = uucp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = netbios_dgm: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = urp_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = auth: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = domain: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ftp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = bgp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ldap: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ecr_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = gopher: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = vmnet: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = systat: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = http_443: portsweep (1.0)
+|   |   |   |   |   |   |   |   att3 = efs: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = whois: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = imap4: imap (2.0)
+|   |   |   |   |   |   |   |   att3 = iso_tsap: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = echo: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = klogin: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = link: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = sunrpc: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = login: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = kshell: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = sql_net: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = time: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = hostnames: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = exec: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ntp_u: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = discard: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = nntp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = courier: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ctf: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = ssh: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = daytime: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = shell: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = netstat: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = pop_3: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = nnsp: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = IRC: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = pop_2: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = printer: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = tim_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = pm_dump: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = red_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = netbios_ssn: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = rje: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = X11: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = urh_i: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = http_8001: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = aol: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = http_2784: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = tftp_u: normal (0.0)
+|   |   |   |   |   |   |   |   att3 = harvest: normal (0.0)
+|   |   |   |   |   att38 > 0.89
+|   |   |   |   |   |   att36 <= 0.07
+|   |   |   |   |   |   |   att25 <= 0.25: normal (3.0)
+|   |   |   |   |   |   |   att25 > 0.25: neptune (109.0)
+|   |   |   |   |   |   att36 > 0.07
+|   |   |   |   |   |   |   att39 <= 0.1: normal (27.0/1.0)
+|   |   |   |   |   |   |   att39 > 0.1: land (4.0)
+|   |   |   att2 = udp
+|   |   |   |   att32 <= 35: rootkit (2.0)
+|   |   |   |   att32 > 35: satan (61.0)
+|   |   |   att2 = icmp
+|   |   |   |   att37 <= 0.12
+|   |   |   |   |   att40 <= 0
+|   |   |   |   |   |   att32 <= 2: ipsweep (36.0/9.0)
+|   |   |   |   |   |   att32 > 2
+|   |   |   |   |   |   |   att23 <= 1: nmap (17.0/2.0)
+|   |   |   |   |   |   |   att23 > 1: ipsweep (3.0/1.0)
+|   |   |   |   |   att40 > 0: portsweep (2.0)
+|   |   |   |   att37 > 0.12: nmap (956.0)
+|   |   att37 > 0.48
+|   |   |   att43 <= 18
+|   |   |   |   att39 <= 0.06
+|   |   |   |   |   att32 <= 70
+|   |   |   |   |   |   att6 <= 12: ipsweep (2816.0/4.0)
+|   |   |   |   |   |   att6 > 12
+|   |   |   |   |   |   |   att35 <= 0.56: normal (6.0/1.0)
+|   |   |   |   |   |   |   att35 > 0.56: ipsweep (20.0)
+|   |   |   |   |   att32 > 70
+|   |   |   |   |   |   att32 <= 122: ipsweep (7.0)
+|   |   |   |   |   |   att32 > 122
+|   |   |   |   |   |   |   att6 <= 6: portsweep (5.0/1.0)
+|   |   |   |   |   |   |   att6 > 6: normal (3.0)
+|   |   |   |   att39 > 0.06: normal (14.0/1.0)
+|   |   |   att43 > 18
+|   |   |   |   att7 <= 0: normal (28.0)
+|   |   |   |   att7 > 0: land (8.0)
+|   att23 > 2
+|   |   att35 <= 0.14
+|   |   |   att5 <= 0
+|   |   |   |   att35 <= 0
+|   |   |   |   |   att33 <= 38
+|   |   |   |   |   |   att12 <= 0
+|   |   |   |   |   |   |   att31 <= 0.24
+|   |   |   |   |   |   |   |   att6 <= 292
+|   |   |   |   |   |   |   |   |   att23 <= 3
+|   |   |   |   |   |   |   |   |   |   att26 <= 0.65: normal (2.0)
+|   |   |   |   |   |   |   |   |   |   att26 > 0.65: neptune (3.0)
+|   |   |   |   |   |   |   |   |   att23 > 3: neptune (58.0)
+|   |   |   |   |   |   |   |   att6 > 292: normal (2.0/1.0)
+|   |   |   |   |   |   |   att31 > 0.24: imap (5.0/1.0)
+|   |   |   |   |   |   att12 > 0
+|   |   |   |   |   |   |   att29 <= 0.87: loadmodule (2.0)
+|   |   |   |   |   |   |   att29 > 0.87: buffer_overflow (2.0)
+|   |   |   |   |   att33 > 38
+|   |   |   |   |   |   att3 = ftp_data: buffer_overflow (2.0)
+|   |   |   |   |   |   att3 = other: normal (0.0)
+|   |   |   |   |   |   att3 = private: normal (0.0)
+|   |   |   |   |   |   att3 = http: normal (283.0)
+|   |   |   |   |   |   att3 = remote_job: normal (0.0)
+|   |   |   |   |   |   att3 = name: normal (0.0)
+|   |   |   |   |   |   att3 = netbios_ns: normal (0.0)
+|   |   |   |   |   |   att3 = eco_i: normal (0.0)
+|   |   |   |   |   |   att3 = mtp: normal (0.0)
+|   |   |   |   |   |   att3 = telnet: normal (0.0)
+|   |   |   |   |   |   att3 = finger: normal (0.0)
+|   |   |   |   |   |   att3 = domain_u: normal (0.0)
+|   |   |   |   |   |   att3 = supdup: normal (0.0)
+|   |   |   |   |   |   att3 = uucp_path: normal (0.0)
+|   |   |   |   |   |   att3 = Z39_50: normal (0.0)
+|   |   |   |   |   |   att3 = smtp: normal (0.0)
+|   |   |   |   |   |   att3 = csnet_ns: normal (0.0)
+|   |   |   |   |   |   att3 = uucp: normal (0.0)
+|   |   |   |   |   |   att3 = netbios_dgm: normal (0.0)
+|   |   |   |   |   |   att3 = urp_i: normal (0.0)
+|   |   |   |   |   |   att3 = auth: normal (0.0)
+|   |   |   |   |   |   att3 = domain: normal (0.0)
+|   |   |   |   |   |   att3 = ftp: normal (0.0)
+|   |   |   |   |   |   att3 = bgp: normal (0.0)
+|   |   |   |   |   |   att3 = ldap: normal (0.0)
+|   |   |   |   |   |   att3 = ecr_i: normal (0.0)
+|   |   |   |   |   |   att3 = gopher: normal (0.0)
+|   |   |   |   |   |   att3 = vmnet: normal (0.0)
+|   |   |   |   |   |   att3 = systat: normal (0.0)
+|   |   |   |   |   |   att3 = http_443: normal (0.0)
+|   |   |   |   |   |   att3 = efs: normal (0.0)
+|   |   |   |   |   |   att3 = whois: normal (0.0)
+|   |   |   |   |   |   att3 = imap4: normal (0.0)
+|   |   |   |   |   |   att3 = iso_tsap: normal (0.0)
+|   |   |   |   |   |   att3 = echo: normal (0.0)
+|   |   |   |   |   |   att3 = klogin: normal (0.0)
+|   |   |   |   |   |   att3 = link: normal (0.0)
+|   |   |   |   |   |   att3 = sunrpc: normal (0.0)
+|   |   |   |   |   |   att3 = login: normal (0.0)
+|   |   |   |   |   |   att3 = kshell: normal (0.0)
+|   |   |   |   |   |   att3 = sql_net: normal (0.0)
+|   |   |   |   |   |   att3 = time: normal (0.0)
+|   |   |   |   |   |   att3 = hostnames: normal (0.0)
+|   |   |   |   |   |   att3 = exec: normal (0.0)
+|   |   |   |   |   |   att3 = ntp_u: normal (0.0)
+|   |   |   |   |   |   att3 = discard: normal (0.0)
+|   |   |   |   |   |   att3 = nntp: normal (0.0)
+|   |   |   |   |   |   att3 = courier: normal (0.0)
+|   |   |   |   |   |   att3 = ctf: normal (0.0)
+|   |   |   |   |   |   att3 = ssh: normal (0.0)
+|   |   |   |   |   |   att3 = daytime: normal (0.0)
+|   |   |   |   |   |   att3 = shell: normal (0.0)
+|   |   |   |   |   |   att3 = netstat: normal (0.0)
+|   |   |   |   |   |   att3 = pop_3: normal (0.0)
+|   |   |   |   |   |   att3 = nnsp: normal (0.0)
+|   |   |   |   |   |   att3 = IRC: normal (0.0)
+|   |   |   |   |   |   att3 = pop_2: normal (0.0)
+|   |   |   |   |   |   att3 = printer: normal (0.0)
+|   |   |   |   |   |   att3 = tim_i: normal (0.0)
+|   |   |   |   |   |   att3 = pm_dump: normal (0.0)
+|   |   |   |   |   |   att3 = red_i: normal (0.0)
+|   |   |   |   |   |   att3 = netbios_ssn: normal (0.0)
+|   |   |   |   |   |   att3 = rje: normal (0.0)
+|   |   |   |   |   |   att3 = X11: normal (0.0)
+|   |   |   |   |   |   att3 = urh_i: normal (0.0)
+|   |   |   |   |   |   att3 = http_8001: normal (0.0)
+|   |   |   |   |   |   att3 = aol: normal (0.0)
+|   |   |   |   |   |   att3 = http_2784: normal (0.0)
+|   |   |   |   |   |   att3 = tftp_u: normal (0.0)
+|   |   |   |   |   |   att3 = harvest: normal (0.0)
+|   |   |   |   att35 > 0
+|   |   |   |   |   att1 <= 0
+|   |   |   |   |   |   att36 <= 0.03
+|   |   |   |   |   |   |   att43 <= 17
+|   |   |   |   |   |   |   |   att33 <= 1
+|   |   |   |   |   |   |   |   |   att30 <= 0.28: neptune (5.0)
+|   |   |   |   |   |   |   |   |   att30 > 0.28
+|   |   |   |   |   |   |   |   |   |   att23 <= 3: portsweep (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att23 > 3: satan (14.0)
+|   |   |   |   |   |   |   |   att33 > 1
+|   |   |   |   |   |   |   |   |   att43 <= 11: normal (17.0)
+|   |   |   |   |   |   |   |   |   att43 > 11
+|   |   |   |   |   |   |   |   |   |   att24 <= 3
+|   |   |   |   |   |   |   |   |   |   |   att26 <= 0.58
+|   |   |   |   |   |   |   |   |   |   |   |   att36 <= 0: neptune (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   att36 > 0: normal (7.0)
+|   |   |   |   |   |   |   |   |   |   |   att26 > 0.58: neptune (6.0)
+|   |   |   |   |   |   |   |   |   |   att24 > 3: neptune (120.0/1.0)
+|   |   |   |   |   |   |   att43 > 17
+|   |   |   |   |   |   |   |   att30 <= 0.92: neptune (40560.0/4.0)
+|   |   |   |   |   |   |   |   att30 > 0.92
+|   |   |   |   |   |   |   |   |   att4 = SF: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = S0: neptune (18.0)
+|   |   |   |   |   |   |   |   |   att4 = REJ: satan (17.0)
+|   |   |   |   |   |   |   |   |   att4 = RSTR: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = SH: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = RSTO: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = S1: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = RSTOS0: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = S3: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = S2: neptune (0.0)
+|   |   |   |   |   |   |   |   |   att4 = OTH: neptune (0.0)
+|   |   |   |   |   |   att36 > 0.03
+|   |   |   |   |   |   |   att32 <= 144
+|   |   |   |   |   |   |   |   att30 <= 0.17: neptune (102.0)
+|   |   |   |   |   |   |   |   att30 > 0.17
+|   |   |   |   |   |   |   |   |   att25 <= 0.62: normal (2.0)
+|   |   |   |   |   |   |   |   |   att25 > 0.62: neptune (4.0)
+|   |   |   |   |   |   |   att32 > 144: portsweep (60.0)
+|   |   |   |   |   att1 > 0
+|   |   |   |   |   |   att24 <= 1: normal (3.0)
+|   |   |   |   |   |   att24 > 1: portsweep (54.0)
+|   |   |   att5 > 0
+|   |   |   |   att34 <= 0.91
+|   |   |   |   |   att32 <= 68: normal (4.0)
+|   |   |   |   |   att32 > 68
+|   |   |   |   |   |   att6 <= 6: satan (368.0)
+|   |   |   |   |   |   att6 > 6
+|   |   |   |   |   |   |   att43 <= 15: satan (13.0/1.0)
+|   |   |   |   |   |   |   att43 > 15: normal (6.0)
+|   |   |   |   att34 > 0.91: ipsweep (5.0/1.0)
+|   |   att35 > 0.14
+|   |   |   att32 <= 98
+|   |   |   |   att30 <= 0.37: neptune (195.0)
+|   |   |   |   att30 > 0.37
+|   |   |   |   |   att24 <= 1: nmap (5.0)
+|   |   |   |   |   att24 > 1: normal (2.0/1.0)
+|   |   |   att32 > 98
+|   |   |   |   att27 <= 0.99
+|   |   |   |   |   att23 <= 3
+|   |   |   |   |   |   att28 <= 0.5
+|   |   |   |   |   |   |   att6 <= 122: satan (30.0/1.0)
+|   |   |   |   |   |   |   att6 > 122: normal (2.0)
+|   |   |   |   |   |   att28 > 0.5: portsweep (6.0/1.0)
+|   |   |   |   |   att23 > 3
+|   |   |   |   |   |   att39 <= 0.36: satan (2931.0/6.0)
+|   |   |   |   |   |   att39 > 0.36
+|   |   |   |   |   |   |   att30 <= 0.76: portsweep (87.0/1.0)
+|   |   |   |   |   |   |   att30 > 0.76: satan (96.0)
+|   |   |   |   att27 > 0.99
+|   |   |   |   |   att30 <= 0.78: portsweep (250.0)
+|   |   |   |   |   att30 > 0.78: satan (23.0)
+att5 > 8
+|   att8 <= 0
+|   |   att13 <= 0
+|   |   |   att43 <= 16
+|   |   |   |   att2 = tcp
+|   |   |   |   |   att28 <= 0.07
+|   |   |   |   |   |   att38 <= 0.25
+|   |   |   |   |   |   |   att5 <= 245
+|   |   |   |   |   |   |   |   att19 <= 0
+|   |   |   |   |   |   |   |   |   att43 <= 8
+|   |   |   |   |   |   |   |   |   |   att12 <= 0
+|   |   |   |   |   |   |   |   |   |   |   att1 <= 13: satan (22.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   att1 > 13: rootkit (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att12 > 0
+|   |   |   |   |   |   |   |   |   |   |   att1 <= 4: warezclient (7.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   att1 > 4
+|   |   |   |   |   |   |   |   |   |   |   |   att32 <= 3: buffer_overflow (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   att32 > 3: loadmodule (4.0/1.0)
+|   |   |   |   |   |   |   |   |   att43 > 8
+|   |   |   |   |   |   |   |   |   |   att17 <= 0
+|   |   |   |   |   |   |   |   |   |   |   att27 <= 0.12
+|   |   |   |   |   |   |   |   |   |   |   |   att43 <= 10
+|   |   |   |   |   |   |   |   |   |   |   |   |   att37 <= 0.09: normal (14.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att37 > 0.09: warezclient (3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   att43 > 10: normal (199.0)
+|   |   |   |   |   |   |   |   |   |   |   att27 > 0.12: satan (5.0)
+|   |   |   |   |   |   |   |   |   |   att17 > 0: multihop (2.0)
+|   |   |   |   |   |   |   |   att19 > 0
+|   |   |   |   |   |   |   |   |   att3 = ftp_data: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = other: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = private: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = http: phf (3.0)
+|   |   |   |   |   |   |   |   |   att3 = remote_job: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = name: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = netbios_ns: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = eco_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = mtp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = telnet: spy (1.0)
+|   |   |   |   |   |   |   |   |   att3 = finger: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = domain_u: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = supdup: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = uucp_path: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = Z39_50: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = smtp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = csnet_ns: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = uucp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = netbios_dgm: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = urp_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = auth: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = domain: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ftp: ftp_write (2.0)
+|   |   |   |   |   |   |   |   |   att3 = bgp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ldap: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ecr_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = gopher: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = vmnet: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = systat: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = http_443: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = efs: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = whois: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = imap4: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = iso_tsap: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = echo: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = klogin: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = link: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = sunrpc: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = login: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = kshell: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = sql_net: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = time: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = hostnames: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = exec: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ntp_u: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = discard: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = nntp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = courier: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ctf: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = ssh: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = daytime: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = shell: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = netstat: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = pop_3: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = nnsp: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = IRC: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = pop_2: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = printer: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = tim_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = pm_dump: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = red_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = netbios_ssn: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = rje: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = X11: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = urh_i: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = http_8001: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = aol: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = http_2784: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = tftp_u: phf (0.0)
+|   |   |   |   |   |   |   |   |   att3 = harvest: phf (0.0)
+|   |   |   |   |   |   |   att5 > 245
+|   |   |   |   |   |   |   |   att25 <= 0.02
+|   |   |   |   |   |   |   |   |   att40 <= 0.25
+|   |   |   |   |   |   |   |   |   |   att6 <= 2502
+|   |   |   |   |   |   |   |   |   |   |   att12 <= 0: normal (31.0/3.0)
+|   |   |   |   |   |   |   |   |   |   |   att12 > 0
+|   |   |   |   |   |   |   |   |   |   |   |   att16 <= 0
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ftp_data
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   att37 <= 0.09
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   att5 <= 358: warezclient (99.0/3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   att5 > 358
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   att1 <= 3: normal (53.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   att1 > 3: warezclient (31.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   att37 > 0.09: warezclient (440.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = other: warezclient (3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = private: normal (1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = http: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = remote_job: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = name: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = netbios_ns: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = eco_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = mtp: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = telnet: normal (1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = finger: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = domain_u: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = supdup: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = uucp_path: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = Z39_50: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = smtp: normal (5.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = csnet_ns: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = uucp: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = netbios_dgm: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = urp_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = auth: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = domain: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ftp: warezclient (305.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = bgp: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ldap: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ecr_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = gopher: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = vmnet: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = systat: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = http_443: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = efs: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = whois: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = imap4: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = iso_tsap: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = echo: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = klogin: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = link: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = sunrpc: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = login: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = kshell: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = sql_net: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = time: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = hostnames: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = exec: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ntp_u: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = discard: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = nntp: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = courier: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ctf: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = ssh: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = daytime: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = shell: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = netstat: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = pop_3: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = nnsp: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = IRC: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = pop_2: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = printer: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = tim_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = pm_dump: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = red_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = netbios_ssn: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = rje: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = X11: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = urh_i: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = http_8001: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = aol: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = http_2784: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = tftp_u: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att3 = harvest: warezclient (0.0)
+|   |   |   |   |   |   |   |   |   |   |   |   att16 > 0
+|   |   |   |   |   |   |   |   |   |   |   |   |   att43 <= 9: ftp_write (2.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   att43 > 9: normal (21.0)
+|   |   |   |   |   |   |   |   |   |   att6 > 2502
+|   |   |   |   |   |   |   |   |   |   |   att23 <= 1
+|   |   |   |   |   |   |   |   |   |   |   |   att43 <= 8: warezmaster (2.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   att43 > 8: normal (6.0)
+|   |   |   |   |   |   |   |   |   |   |   att23 > 1: back (4.0)
+|   |   |   |   |   |   |   |   |   att40 > 0.25
+|   |   |   |   |   |   |   |   |   |   att14 <= 0
+|   |   |   |   |   |   |   |   |   |   |   att43 <= 10: satan (10.0/3.0)
+|   |   |   |   |   |   |   |   |   |   |   att43 > 10: normal (14.0)
+|   |   |   |   |   |   |   |   |   |   att14 > 0: rootkit (2.0/1.0)
+|   |   |   |   |   |   |   |   att25 > 0.02
+|   |   |   |   |   |   |   |   |   att35 <= 0
+|   |   |   |   |   |   |   |   |   |   att5 <= 26408: normal (2.0/1.0)
+|   |   |   |   |   |   |   |   |   |   att5 > 26408: back (6.0)
+|   |   |   |   |   |   |   |   |   att35 > 0: normal (97.0)
+|   |   |   |   |   |   att38 > 0.25
+|   |   |   |   |   |   |   att36 <= 0.75
+|   |   |   |   |   |   |   |   att35 <= 0
+|   |   |   |   |   |   |   |   |   att12 <= 0: imap (2.0)
+|   |   |   |   |   |   |   |   |   att12 > 0: normal (2.0)
+|   |   |   |   |   |   |   |   att35 > 0: normal (346.0/1.0)
+|   |   |   |   |   |   |   att36 > 0.75
+|   |   |   |   |   |   |   |   att1 <= 6: normal (8.0/1.0)
+|   |   |   |   |   |   |   |   att1 > 6: warezclient (2.0)
+|   |   |   |   |   att28 > 0.07
+|   |   |   |   |   |   att11 <= 0
+|   |   |   |   |   |   |   att5 <= 8325
+|   |   |   |   |   |   |   |   att27 <= 0.17: buffer_overflow (2.0/1.0)
+|   |   |   |   |   |   |   |   att27 > 0.17: normal (23.0/1.0)
+|   |   |   |   |   |   |   att5 > 8325
+|   |   |   |   |   |   |   |   att12 <= 0: portsweep (7.0)
+|   |   |   |   |   |   |   |   att12 > 0
+|   |   |   |   |   |   |   |   |   att1 <= 19: back (63.0)
+|   |   |   |   |   |   |   |   |   att1 > 19: normal (2.0/1.0)
+|   |   |   |   |   |   att11 > 0
+|   |   |   |   |   |   |   att6 <= 215: guess_passwd (49.0)
+|   |   |   |   |   |   |   att6 > 215: normal (2.0)
+|   |   |   |   att2 = udp
+|   |   |   |   |   att43 <= 14
+|   |   |   |   |   |   att29 <= 0.75: satan (3.0)
+|   |   |   |   |   |   att29 > 0.75
+|   |   |   |   |   |   |   att36 <= 0.02: normal (5.0/1.0)
+|   |   |   |   |   |   |   att36 > 0.02
+|   |   |   |   |   |   |   |   att32 <= 3
+|   |   |   |   |   |   |   |   |   att5 <= 156: normal (6.0)
+|   |   |   |   |   |   |   |   |   att5 > 156: nmap (2.0)
+|   |   |   |   |   |   |   |   att32 > 3: nmap (246.0/1.0)
+|   |   |   |   |   att43 > 14: normal (24.0)
+|   |   |   |   att2 = icmp
+|   |   |   |   |   att5 <= 19: ipsweep (314.0)
+|   |   |   |   |   att5 > 19
+|   |   |   |   |   |   att5 <= 292
+|   |   |   |   |   |   |   att43 <= 6: satan (29.0)
+|   |   |   |   |   |   |   att43 > 6
+|   |   |   |   |   |   |   |   att5 <= 25: satan (4.0/1.0)
+|   |   |   |   |   |   |   |   att5 > 25: normal (59.0)
+|   |   |   |   |   |   att5 > 292
+|   |   |   |   |   |   |   att3 = ftp_data: smurf (0.0)
+|   |   |   |   |   |   |   att3 = other: smurf (0.0)
+|   |   |   |   |   |   |   att3 = private: smurf (0.0)
+|   |   |   |   |   |   |   att3 = http: smurf (0.0)
+|   |   |   |   |   |   |   att3 = remote_job: smurf (0.0)
+|   |   |   |   |   |   |   att3 = name: smurf (0.0)
+|   |   |   |   |   |   |   att3 = netbios_ns: smurf (0.0)
+|   |   |   |   |   |   |   att3 = eco_i: smurf (0.0)
+|   |   |   |   |   |   |   att3 = mtp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = telnet: smurf (0.0)
+|   |   |   |   |   |   |   att3 = finger: smurf (0.0)
+|   |   |   |   |   |   |   att3 = domain_u: smurf (0.0)
+|   |   |   |   |   |   |   att3 = supdup: smurf (0.0)
+|   |   |   |   |   |   |   att3 = uucp_path: smurf (0.0)
+|   |   |   |   |   |   |   att3 = Z39_50: smurf (0.0)
+|   |   |   |   |   |   |   att3 = smtp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = csnet_ns: smurf (0.0)
+|   |   |   |   |   |   |   att3 = uucp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = netbios_dgm: smurf (0.0)
+|   |   |   |   |   |   |   att3 = urp_i: smurf (0.0)
+|   |   |   |   |   |   |   att3 = auth: smurf (0.0)
+|   |   |   |   |   |   |   att3 = domain: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ftp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = bgp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ldap: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ecr_i: smurf (50.0)
+|   |   |   |   |   |   |   att3 = gopher: smurf (0.0)
+|   |   |   |   |   |   |   att3 = vmnet: smurf (0.0)
+|   |   |   |   |   |   |   att3 = systat: smurf (0.0)
+|   |   |   |   |   |   |   att3 = http_443: smurf (0.0)
+|   |   |   |   |   |   |   att3 = efs: smurf (0.0)
+|   |   |   |   |   |   |   att3 = whois: smurf (0.0)
+|   |   |   |   |   |   |   att3 = imap4: smurf (0.0)
+|   |   |   |   |   |   |   att3 = iso_tsap: smurf (0.0)
+|   |   |   |   |   |   |   att3 = echo: smurf (0.0)
+|   |   |   |   |   |   |   att3 = klogin: smurf (0.0)
+|   |   |   |   |   |   |   att3 = link: smurf (0.0)
+|   |   |   |   |   |   |   att3 = sunrpc: smurf (0.0)
+|   |   |   |   |   |   |   att3 = login: smurf (0.0)
+|   |   |   |   |   |   |   att3 = kshell: smurf (0.0)
+|   |   |   |   |   |   |   att3 = sql_net: smurf (0.0)
+|   |   |   |   |   |   |   att3 = time: smurf (0.0)
+|   |   |   |   |   |   |   att3 = hostnames: smurf (0.0)
+|   |   |   |   |   |   |   att3 = exec: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ntp_u: smurf (0.0)
+|   |   |   |   |   |   |   att3 = discard: smurf (0.0)
+|   |   |   |   |   |   |   att3 = nntp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = courier: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ctf: smurf (0.0)
+|   |   |   |   |   |   |   att3 = ssh: smurf (0.0)
+|   |   |   |   |   |   |   att3 = daytime: smurf (0.0)
+|   |   |   |   |   |   |   att3 = shell: smurf (0.0)
+|   |   |   |   |   |   |   att3 = netstat: smurf (0.0)
+|   |   |   |   |   |   |   att3 = pop_3: smurf (0.0)
+|   |   |   |   |   |   |   att3 = nnsp: smurf (0.0)
+|   |   |   |   |   |   |   att3 = IRC: smurf (0.0)
+|   |   |   |   |   |   |   att3 = pop_2: smurf (0.0)
+|   |   |   |   |   |   |   att3 = printer: smurf (0.0)
+|   |   |   |   |   |   |   att3 = tim_i: pod (4.0/1.0)
+|   |   |   |   |   |   |   att3 = pm_dump: smurf (0.0)
+|   |   |   |   |   |   |   att3 = red_i: smurf (0.0)
+|   |   |   |   |   |   |   att3 = netbios_ssn: smurf (0.0)
+|   |   |   |   |   |   |   att3 = rje: smurf (0.0)
+|   |   |   |   |   |   |   att3 = X11: smurf (0.0)
+|   |   |   |   |   |   |   att3 = urh_i: smurf (0.0)
+|   |   |   |   |   |   |   att3 = http_8001: smurf (0.0)
+|   |   |   |   |   |   |   att3 = aol: smurf (0.0)
+|   |   |   |   |   |   |   att3 = http_2784: smurf (0.0)
+|   |   |   |   |   |   |   att3 = tftp_u: smurf (0.0)
+|   |   |   |   |   |   |   att3 = harvest: smurf (0.0)
+|   |   |   att43 > 16
+|   |   |   |   att37 <= 0.24
+|   |   |   |   |   att36 <= 0.5
+|   |   |   |   |   |   att2 = tcp: normal (46676.0/2.0)
+|   |   |   |   |   |   att2 = udp: normal (9643.0)
+|   |   |   |   |   |   att2 = icmp
+|   |   |   |   |   |   |   att5 <= 798: normal (821.0)
+|   |   |   |   |   |   |   att5 > 798: smurf (775.0)
+|   |   |   |   |   att36 > 0.5
+|   |   |   |   |   |   att23 <= 24
+|   |   |   |   |   |   |   att43 <= 19
+|   |   |   |   |   |   |   |   att33 <= 254: normal (377.0/6.0)
+|   |   |   |   |   |   |   |   att33 > 254
+|   |   |   |   |   |   |   |   |   att5 <= 422: normal (22.0)
+|   |   |   |   |   |   |   |   |   att5 > 422: smurf (34.0)
+|   |   |   |   |   |   |   att43 > 19
+|   |   |   |   |   |   |   |   att23 <= 11: normal (3526.0)
+|   |   |   |   |   |   |   |   att23 > 11
+|   |   |   |   |   |   |   |   |   att33 <= 241: normal (213.0)
+|   |   |   |   |   |   |   |   |   att33 > 241: smurf (7.0)
+|   |   |   |   |   |   att23 > 24
+|   |   |   |   |   |   |   att2 = tcp: smurf (0.0)
+|   |   |   |   |   |   |   att2 = udp: normal (493.0)
+|   |   |   |   |   |   |   att2 = icmp: smurf (1777.0)
+|   |   |   |   att37 > 0.24
+|   |   |   |   |   att32 <= 4
+|   |   |   |   |   |   att6 <= 18
+|   |   |   |   |   |   |   att5 <= 24: ipsweep (238.0/1.0)
+|   |   |   |   |   |   |   att5 > 24: normal (6.0)
+|   |   |   |   |   |   att6 > 18: normal (112.0)
+|   |   |   |   |   att32 > 4: normal (423.0)
+|   |   att13 > 0
+|   |   |   att5 <= 12614
+|   |   |   |   att43 <= 7
+|   |   |   |   |   att3 = ftp_data: buffer_overflow (0.0)
+|   |   |   |   |   att3 = other: buffer_overflow (0.0)
+|   |   |   |   |   att3 = private: buffer_overflow (0.0)
+|   |   |   |   |   att3 = http: buffer_overflow (0.0)
+|   |   |   |   |   att3 = remote_job: buffer_overflow (0.0)
+|   |   |   |   |   att3 = name: buffer_overflow (0.0)
+|   |   |   |   |   att3 = netbios_ns: buffer_overflow (0.0)
+|   |   |   |   |   att3 = eco_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = mtp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = telnet
+|   |   |   |   |   |   att35 <= 0.01
+|   |   |   |   |   |   |   att18 <= 0: buffer_overflow (18.0)
+|   |   |   |   |   |   |   att18 > 0
+|   |   |   |   |   |   |   |   att1 <= 150: loadmodule (2.0)
+|   |   |   |   |   |   |   |   att1 > 150: multihop (2.0)
+|   |   |   |   |   |   att35 > 0.01: rootkit (3.0/1.0)
+|   |   |   |   |   att3 = finger: buffer_overflow (0.0)
+|   |   |   |   |   att3 = domain_u: buffer_overflow (0.0)
+|   |   |   |   |   att3 = supdup: buffer_overflow (0.0)
+|   |   |   |   |   att3 = uucp_path: buffer_overflow (0.0)
+|   |   |   |   |   att3 = Z39_50: buffer_overflow (0.0)
+|   |   |   |   |   att3 = smtp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = csnet_ns: buffer_overflow (0.0)
+|   |   |   |   |   att3 = uucp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = netbios_dgm: buffer_overflow (0.0)
+|   |   |   |   |   att3 = urp_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = auth: satan (3.0)
+|   |   |   |   |   att3 = domain: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ftp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = bgp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ldap: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ecr_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = gopher: buffer_overflow (0.0)
+|   |   |   |   |   att3 = vmnet: buffer_overflow (0.0)
+|   |   |   |   |   att3 = systat: buffer_overflow (0.0)
+|   |   |   |   |   att3 = http_443: buffer_overflow (0.0)
+|   |   |   |   |   att3 = efs: buffer_overflow (0.0)
+|   |   |   |   |   att3 = whois: buffer_overflow (0.0)
+|   |   |   |   |   att3 = imap4: imap (1.0)
+|   |   |   |   |   att3 = iso_tsap: buffer_overflow (0.0)
+|   |   |   |   |   att3 = echo: buffer_overflow (0.0)
+|   |   |   |   |   att3 = klogin: buffer_overflow (0.0)
+|   |   |   |   |   att3 = link: buffer_overflow (0.0)
+|   |   |   |   |   att3 = sunrpc: buffer_overflow (0.0)
+|   |   |   |   |   att3 = login: ftp_write (1.0)
+|   |   |   |   |   att3 = kshell: buffer_overflow (0.0)
+|   |   |   |   |   att3 = sql_net: buffer_overflow (0.0)
+|   |   |   |   |   att3 = time: buffer_overflow (0.0)
+|   |   |   |   |   att3 = hostnames: buffer_overflow (0.0)
+|   |   |   |   |   att3 = exec: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ntp_u: buffer_overflow (0.0)
+|   |   |   |   |   att3 = discard: buffer_overflow (0.0)
+|   |   |   |   |   att3 = nntp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = courier: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ctf: buffer_overflow (0.0)
+|   |   |   |   |   att3 = ssh: buffer_overflow (0.0)
+|   |   |   |   |   att3 = daytime: buffer_overflow (0.0)
+|   |   |   |   |   att3 = shell: buffer_overflow (0.0)
+|   |   |   |   |   att3 = netstat: buffer_overflow (0.0)
+|   |   |   |   |   att3 = pop_3: buffer_overflow (0.0)
+|   |   |   |   |   att3 = nnsp: buffer_overflow (0.0)
+|   |   |   |   |   att3 = IRC: buffer_overflow (0.0)
+|   |   |   |   |   att3 = pop_2: buffer_overflow (0.0)
+|   |   |   |   |   att3 = printer: buffer_overflow (0.0)
+|   |   |   |   |   att3 = tim_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = pm_dump: buffer_overflow (0.0)
+|   |   |   |   |   att3 = red_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = netbios_ssn: buffer_overflow (0.0)
+|   |   |   |   |   att3 = rje: buffer_overflow (0.0)
+|   |   |   |   |   att3 = X11: buffer_overflow (0.0)
+|   |   |   |   |   att3 = urh_i: buffer_overflow (0.0)
+|   |   |   |   |   att3 = http_8001: buffer_overflow (0.0)
+|   |   |   |   |   att3 = aol: buffer_overflow (0.0)
+|   |   |   |   |   att3 = http_2784: buffer_overflow (0.0)
+|   |   |   |   |   att3 = tftp_u: buffer_overflow (0.0)
+|   |   |   |   |   att3 = harvest: buffer_overflow (0.0)
+|   |   |   |   att43 > 7: normal (369.0)
+|   |   |   att5 > 12614: back (885.0/2.0)
+|   att8 > 0
+|   |   att2 = tcp: teardrop (0.0)
+|   |   att2 = udp: teardrop (892.0)
+|   |   att2 = icmp: pod (198.0)
+
+Number of Leaves  : 	667
+
+Size of the tree : 	834
+
+
+Time taken to build model: 23.9 seconds
+
+=== Evaluation on training set ===
+
+Time taken to test model on training data: 0.69 seconds
+
+=== Summary ===
+
+Correctly Classified Instances      125879               99.9254 %
+Incorrectly Classified Instances        94                0.0746 %
+Kappa statistic                          0.9988
+Mean absolute error                      0.0001
+Root mean squared error                  0.0074
+Relative absolute error                  0.21   %
+Root relative squared error              4.5828 %
+Total Number of Instances           125973     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 1.000    0.000    1.000      1.000    1.000      0.999    1.000     1.000     normal
+                 1.000    0.000    1.000      1.000    1.000      1.000    1.000     1.000     neptune
+                 0.996    0.000    0.996      0.996    0.996      0.995    1.000     0.999     warezclient
+                 0.999    0.000    0.996      0.999    0.997      0.997    1.000     0.999     ipsweep
+                 0.995    0.000    0.998      0.995    0.997      0.997    1.000     0.998     portsweep
+                 1.000    0.000    1.000      1.000    1.000      1.000    1.000     1.000     teardrop
+                 0.991    0.000    0.997      0.991    0.994      0.994    1.000     0.999     nmap
+                 0.999    0.000    0.996      0.999    0.997      0.997    1.000     0.999     satan
+                 0.999    0.000    1.000      0.999    0.999      0.999    1.000     1.000     smurf
+                 1.000    0.000    0.995      1.000    0.998      0.998    1.000     1.000     pod
+                 1.000    0.000    0.998      1.000    0.999      0.999    1.000     0.998     back
+                 0.925    0.000    1.000      0.925    0.961      0.962    0.996     0.961     guess_passwd
+                 0.750    0.000    0.750      0.750    0.750      0.750    1.000     0.780     ftp_write
+                 0.571    0.000    1.000      0.571    0.727      0.756    1.000     0.729     multihop
+                 0.700    0.000    0.700      0.700    0.700      0.700    1.000     0.710     rootkit
+                 0.967    0.000    0.935      0.967    0.951      0.951    1.000     0.992     buffer_overflow
+                 1.000    0.000    0.917      1.000    0.957      0.957    1.000     0.970     imap
+                 0.900    0.000    0.857      0.900    0.878      0.878    1.000     0.878     warezmaster
+                 0.750    0.000    1.000      0.750    0.857      0.866    1.000     0.950     phf
+                 0.778    0.000    0.933      0.778    0.848      0.852    1.000     0.882     land
+                 0.778    0.000    0.875      0.778    0.824      0.825    1.000     0.822     loadmodule
+                 0.500    0.000    1.000      0.500    0.667      0.707    1.000     0.567     spy
+                 0.000    0.000    ?          0.000    ?          ?        1.000     0.500     perl
+Weighted Avg.    0.999    0.000    ?          0.999    ?          ?        1.000     1.000     
+
+=== Confusion Matrix ===
+
+     a     b     c     d     e     f     g     h     i     j     k     l     m     n     o     p     q     r     s     t     u     v     w   <-- classified as
+ 67323     2     3     5     1     0     2     3     0     1     2     0     0     0     0     0     0     0     0     1     0     0     0 |     a = normal
+     1 41211     0     0     0     0     0     1     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0 |     b = neptune
+     4     0   886     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     c = warezclient
+     2     0     0  3594     0     0     2     0     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0 |     d = ipsweep
+     1     3     0     1  2917     0     0     9     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     e = portsweep
+     0     0     0     0     0   892     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     f = teardrop
+     1     1     0    10     1     0  1479     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     g = nmap
+     2     0     0     0     3     0     0  3628     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     h = satan
+     3     0     0     0     0     0     0     0  2643     0     0     0     0     0     0     0     0     0     0     0     0     0     0 |     i = smurf
+     0     0     0     0     0     0     0     0     0   201     0     0     0     0     0     0     0     0     0     0     0     0     0 |     j = pod
+     0     0     0     0     0     0     0     0     0     0   956     0     0     0     0     0     0     0     0     0     0     0     0 |     k = back
+     2     0     1     0     0     0     0     0     0     0     0    49     0     0     1     0     0     0     0     0     0     0     0 |     l = guess_passwd
+     1     0     0     0     0     0     0     0     0     0     0     0     6     0     0     1     0     0     0     0     0     0     0 |     m = ftp_write
+     1     0     0     0     0     0     0     0     0     0     0     0     0     4     0     0     0     2     0     0     0     0     0 |     n = multihop
+     2     0     0     0     0     0     0     0     0     0     0     0     0     0     7     0     0     0     0     0     1     0     0 |     o = rootkit
+     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0    29     0     0     0     0     0     0     0 |     p = buffer_overflow
+     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    11     0     0     0     0     0     0 |     q = imap
+     2     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    18     0     0     0     0     0 |     r = warezmaster
+     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     0     0     3     0     0     0     0 |     s = phf
+     3     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     0     0    14     0     0     0 |     t = land
+     2     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     7     0     0 |     u = loadmodule
+     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     0 |     v = spy
+     0     0     0     0     0     0     0     0     0     0     0     0     1     0     1     0     0     1     0     0     0     0     0 |     w = perl
+

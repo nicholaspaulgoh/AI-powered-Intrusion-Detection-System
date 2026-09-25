@@ -264,7 +264,7 @@ public class Preprocessor{
          if(range ==0){
              normalized[i] =0.0;
          }else{
-             normalized[i] = Math.min((normalized[i]-trainMin[i])/range,1.0);
+             normalized[i] = Math.min((features[i]-trainMin[i])/range,1.0);
              if (normalized[i] < 0) normalized[i] = 0.0;
          }
      }

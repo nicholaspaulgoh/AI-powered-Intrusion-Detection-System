@@ -84,6 +84,7 @@ public class Main{
         System.out.println("\n[6] Starting live packet capture...");
         String liveModelPath = modelPath;
         LiveDetection.initialize(liveModelPath);
+        LiveDetection.startTimeoutMonitor();
         NetworkCapture.listInterfaces();
         System.out.println("Choose interface (or -1 to skip live capture): ");
         int ifaceChoice= new Scanner(System.in).nextInt();
