@@ -38,14 +38,14 @@ The project started from near-zero Java experience and was built up into a full 
                      └──────────┬──────────┘
                                 │
                  ┌──────────────┴───────────────┐
-                 ▼                               ▼
+                 ▼                              ▼
      ┌───────────────────────┐      ┌─────────────────────────┐
      │ Random Forest (Weka)  │      │ Autoencoder (Python/    │
      │ + Cost-Sensitive      │      │ TensorFlow/Keras)       │
      │ Classification        │      │ via Flask REST API      │
      └───────────┬───────────┘      └────────────┬────────────┘
-                 │                                 │
-                 └───────────────┬─────────────────┘
+                 │                               │
+                 └───────────────┬───────────────┘
                                  ▼
                      ┌─────────────────────┐
                      │ Post-classification │
