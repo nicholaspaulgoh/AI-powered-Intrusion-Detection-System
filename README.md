@@ -173,7 +173,7 @@ java -cp <classpath> Main --live
 
 ---
 
-## Project Structure (adjust to match your actual layout)
+## Project Structure
 
 ```
 AI-powered-Intrusion-Detection-System/
