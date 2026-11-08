@@ -144,7 +144,7 @@ NSL-KDD features 10–21 (`num_failed_logins`, `logged_in`, `root_shell`, `su_at
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/nicholaspaulgoh/AI-powered-Intrusion-Detection-System
 cd AI-powered-Intrusion-Detection-System
 
 # Python side: set up the anomaly detection service
